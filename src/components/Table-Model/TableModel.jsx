@@ -23,7 +23,7 @@ function TableModel({
     const usersWithOrders = users.filter((user) => user.orders.length > 0);
 
     const renderCustomerTableRow = (order, index) => (
-        <TableRow key={index}>
+        <TableRow key={index} >
             <TableCell 
                 className="tableCell" 
                 sx={{ 
@@ -182,11 +182,11 @@ function TableModel({
     );
 
     const renderUserOrdersTable = (user) => (
-        <Box key={user._id} sx={{ mt: 4 }}>
+        <Box key={user._id} sx={{ mt: 4 }} className='user_table_container'>
             <Typography variant="h6">Orders for {user.firstName} {user.lastName}</Typography>
             <Divider sx={{ mb: 2 }} />
             <TableContainer component={Paper} className="userOrdersTableContainer">
-                <Table aria-label="user orders table" sx={{ minWidth: 650 }}>
+                <Table aria-label="user orders table">
                     <TableHead className="tableHeader">
                         <TableRow>
                             <TableCell className="tableCell">{label}</TableCell>
@@ -207,8 +207,8 @@ function TableModel({
         <Box sx={{ width: tableWidth }}>
             {user?.orders.length > 0 && !adminTable && (
                 <TableContainer component={Paper} className="tableContainer">
-                    <Table aria-label="simple table" sx={{ minWidth: 650 }}>
-                        <TableHead className="tableHeader">
+                    <Table aria-label="simple table">
+                        <TableHead className="tableHeader" >
                             <TableRow>
                                 <TableCell className="tableCell"> {label} </TableCell>
                                 <TableCell className="tableCell"> {labelTwo} </TableCell>
