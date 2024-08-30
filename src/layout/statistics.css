@@ -1,0 +1,27 @@
+#statistics_form {
+    width: 90%;
+    display: flex;
+    gap: 50px;
+}
+
+
+@media (max-width: 480px) {
+    .statistics_container {
+        width: 90%;
+    }
+
+    .statistics_header {
+        font-size: 40px !important;
+        text-align: center !important;
+        margin-left: 8% !important;
+        margin-bottom: 10% !important;
+        width: 100%;
+    }
+
+    #statistics_form {
+        flex-direction: column;
+        float: inline-end;
+        align-items: start;
+        text-align: center;
+    }
+}

@@ -1,0 +1,19 @@
+.category_content {
+    margin: 10px;
+    padding: 20px 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 1px 1px 2px 1px rgba(0, 0, 0, 0.459);
+    background-color: rgba(255, 255, 255, 0.801);
+}
+
+
+@media (max-width: 480px) {
+    .category_content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+}

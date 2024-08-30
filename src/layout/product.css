@@ -1,0 +1,92 @@
+/* Base styles for desktop and larger screens */
+.product_content_form {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product_content {
+    width: 50%; /* Default width for larger screens */
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+    color: black;
+}
+
+.product_sub_content {
+    box-shadow: 1px 1px 2px 2px #4c9bd457;
+    color: #999999;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 20px;
+    float: right;
+    text-align: center;
+}
+
+.product_amount_form {
+    display: flex;
+    gap: 20px;
+}
+
+/* Tablet and small desktop screens (768px - 1024px) */
+@media (max-width: 1024px) {
+    .product_content {
+        width: 70%; /* Slightly larger content width on tablets */
+        margin: auto;
+    }
+
+    .product_sub_content {
+        margin: 15px;
+        padding: 15px;
+    }
+
+    .product_amount_form {
+        flex-direction: column; /* Stack items vertically on smaller screens */
+        gap: 15px;
+    }
+}
+
+/* Smartphone screens (under 768px) */
+@media (max-width: 768px) {
+    .product_content_form {
+        flex-direction: column; 
+        margin: 10px;
+    }
+
+    .product_content {
+        width: 90%; 
+        margin: auto;
+    }
+
+    .product_sub_content {
+        margin: 10px;
+        padding: 10px;
+        width: 90%;
+        float: none;
+    }
+
+    .product_amount_form {
+        flex-direction: row; 
+        margin: 20px;
+
+    }
+}
+
+/* Extra small smartphone screens (under 480px) */
+@media (max-width: 480px) {
+    .product_content {
+        width: 100%; 
+        margin: auto;
+    }
+
+    .product_sub_content {
+        margin: 5px;
+        padding: 8px;
+        width: 100%;
+    }
+
+    .product_amount_form {
+        gap: 5px;
+    }
+}

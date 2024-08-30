@@ -1,0 +1,103 @@
+/* Base styles for larger screens */
+.tableContainer {
+    width: 100%;
+    height: auto;
+    margin: auto;
+    border: 1px solid #ccc;
+}
+
+.smallTableContainer {
+    margin: auto;
+    margin-top: 20px;
+    width: 70% !important;
+    border: 1px solid black;
+    height: 200px;
+}
+
+.smallTableHead {
+    text-align: center !important;
+    font-weight: 600 !important;
+}
+
+.tableHeader {
+    background-color: #cccccce5;
+    box-shadow: 1px 1px 12px 11px #ccc;
+}
+
+.tableCell {
+    border-right: 1px solid #ccc;
+    font-weight: 600 !important;
+    text-align: center !important;
+}
+
+.smallTableCell {
+    font-weight: 600 !important;
+    text-align: center !important;
+    border-right: 1px solid #ccc;
+}
+
+/* Responsive styles for tablet screens */
+@media (max-width: 1024px) {
+    .tableContainer {
+        width: 90% !important;
+        float: none;
+        margin-top: 20px;
+    }
+
+    .smallTableContainer {
+        width: 90% !important;
+        height: auto;
+    }
+
+    .tableCell,
+    .smallTableCell {
+        font-size: 14px !important;
+        padding: 10px;
+    }
+}
+
+/* Responsive styles for smartphone screens */
+@media (max-width: 768px) {
+    .tableContainer,
+    .smallTableContainer {
+        width: 100% !important;
+        margin-top: 10px;
+        height: auto;
+        overflow-x: auto;
+    }
+
+    .tableHeader,
+    .tableCell,
+    .smallTableHead,
+    .smallTableCell {
+        font-size: 12px !important;
+        padding: 8px;
+    }
+
+    .smallTableContainer {
+        height: auto;
+    }
+
+    .tableCell,
+    .smallTableCell {
+        white-space: nowrap;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .tableContainer,
+    .smallTableContainer {
+        margin-top: 5px;
+        height: auto;
+        overflow-x: auto;
+    }
+
+    .tableHeader,
+    .tableCell,
+    .smallTableHead,
+    .smallTableCell {
+        font-size: 10px !important;
+        padding: 5px;
+    }
+}

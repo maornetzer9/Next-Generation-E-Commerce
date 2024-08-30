@@ -1,0 +1,245 @@
+/* Mobile-first base styles (default for all screen sizes) */
+.products-container {
+    border-radius: 20px;
+    box-shadow: 1px 1px 2px 2px lightgray;
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.product-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 20px;
+    /* box-shadow: 1px 1px 2px 1px gray; */
+    padding: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 20px auto;
+    overflow: hidden;
+    gap: 20px;
+}
+
+/* Left side (Category and Description) */
+.product-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 10px;
+    gap: 10px;
+}
+
+/* Right side (Price, Link to Pic, and Table) */
+.product-right {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+/* Additional styles for elements inside the right side */
+.product-right-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 1px 1px 5px 5px lightgray;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+/* Typography styles */
+.product-label {
+    font-weight: 700;
+    color: black;
+    font-size: 1rem;
+}
+
+/* Button styles */
+.save-button {
+    outline: none !important;
+    margin-top: 20px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+}
+
+.add-product-button-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.add-product-button {
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    outline: none !important;
+}
+
+/* Link styles */
+.product-link {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: block;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* Header styles */
+.product-header {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 20px 0;
+}
+
+/* Media Queries */
+
+/* Small mobile devices (under 480px) */
+@media (max-width: 480px) {
+
+    .products-container {
+        width: 35%;
+        padding: 10px 10px;
+        float: left;
+    
+    }
+    .product-box {
+        width: 90% ;
+        padding: 10px;
+        gap: 20px;
+        margin-bottom: 100px;
+    }
+
+    .product-right-content {
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .product-label {
+        font-size: 0.9rem;
+    }
+
+    .save-button {
+        margin-top: 10px !important;
+        font-size: 0.9rem !important;
+    }
+
+    .product-link {
+        font-size: 0.8rem;
+    }
+
+    .product-header {
+        font-size: 1.2rem;
+    }
+}
+
+/* Medium mobile devices (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+    .product-box {
+
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .product-right-content {
+        padding: 20px;
+        margin: 20px 0;
+    }
+
+    .product-label {
+        font-size: 1rem;
+    }
+
+    .save-button {
+        margin-top: 15px !important;
+        font-size: 1rem !important;
+    }
+
+    .product-link {
+        font-size: 0.9rem;
+    }
+
+    .product-header {
+        font-size: 1.5rem;
+    }
+}
+
+/* Tablet devices (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .product-box {
+        flex-direction: row;
+        padding: 40px;
+        gap: 40px;
+    }
+
+    .product-left {
+        padding: 20px;
+    }
+
+    .product-right {
+        width: 60%;
+    }
+
+    .product-right-content {
+        padding: 30px;
+        margin: 30px;
+    }
+
+    .product-label {
+        font-size: 1.2rem;
+    }
+
+    .save-button {
+        margin-top: 40px !important;
+    }
+
+    .product-link {
+        font-size: 1rem;
+    }
+
+    .product-header {
+        font-size: 2rem;
+        margin: 30px 0;
+    }
+}
+
+/* Desktop devices (1024px and up) */
+@media (min-width: 1024px) {
+    .product-box {
+        flex-direction: row;
+        padding: 70px;
+        gap: 80px;
+    }
+
+    .product-left {
+        padding: 20px;
+    }
+
+    .product-right {
+        width: 60%;
+    }
+
+    .product-right-content {
+        padding: 30px;
+        margin: 30px;
+    }
+
+    .product-label {
+        font-size: 1.5rem;
+    }
+
+    .save-button {
+        margin-top: 160px !important;
+        font-size: 1.2rem !important;
+    }
+
+    .product-link {
+        font-size: 1.2rem;
+    }
+
+    .product-header {
+        font-size: 2.5rem;
+        height: 100px;
+    }
+}

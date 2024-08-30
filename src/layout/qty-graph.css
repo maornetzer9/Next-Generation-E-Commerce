@@ -1,0 +1,37 @@
+#qty_form {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+}
+
+.qtyGraph_header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    #qty_form {
+        width: 97%;
+        border-radius: 10px;
+    }
+
+    .qtyGraph_header {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #qty_form {
+        padding: 10px;
+        box-sizing: content-box;
+    }
+
+    .qtyGraph_header {
+        font-size: 20px !important;
+    }
+
+}

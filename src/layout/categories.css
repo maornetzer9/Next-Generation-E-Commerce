@@ -1,0 +1,117 @@
+.categories_form {
+    height: auto;
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+
+.categories_inner_form {
+    width: 100%;
+    max-width: 950px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.new_category {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+    justify-content: space-between;
+}
+
+.new_category button {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.new_category button:hover {
+    background-color: #0056b3;
+}
+
+/* Small mobile devices (under 480px) */
+@media (max-width: 480px) {
+    .categories_form {
+        width: 100%;
+        float: left;
+    }
+
+    .categories_inner_form {
+    }
+
+    .categories_header {
+        text-align: center;
+        font-size: 30px !important;
+        font-weight: 600 !important;
+    }
+
+    .categories_inner_form {
+        padding: 10px;
+    }
+
+    .new_category input {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .new_category button {
+        width: 100%;
+        padding: 8px;
+    }
+
+    .new_category {
+        gap: 20px;
+        align-items: center;
+    }
+}
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+    .categories_form {
+        width: 85%;
+        height: 80vh;
+    }
+
+    .categories_inner_form {
+        padding: 30px;
+    }
+
+    .new_category {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .new_category input {
+        width: 70%;
+        margin-bottom: 0;
+        margin-right: 20px;
+    }
+
+    .new_category button {
+        width: 20%;
+    }
+}
+
+/* Desktop screens */
+@media (min-width: 1024px) {
+    .categories_inner_form {
+        padding: 40px;
+    }
+
+    .new_category input {
+        width: 75%;
+    }
+
+    .new_category button {
+        width: 15%;
+    }
+}
