@@ -125,6 +125,7 @@ return (
       <Box
         component="main"
         sx={{
+            overflow:'hidden',
           flexGrow: 1,
           p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -132,20 +133,8 @@ return (
         }}
       >
 
-        
-
         <Outlet />
         <Toolbar />
-        {/* <Box 
-            component={'div'}
-        >
-            <Typography variant='h1'>
-                    Welcome
-              </Typography>
-            <Typography variant='h1'>
-                    {user.firstName + " " + user.lastName}
-            </Typography>
-        </Box> */}
       </Box>
 
     </Box>

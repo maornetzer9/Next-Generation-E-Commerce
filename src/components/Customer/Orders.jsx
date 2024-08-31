@@ -17,7 +17,7 @@ export default function Orders() {
     }, [ dispatch, user._id ])
 
     return (
-        <Box component={"div"}>
+        <Box component={"div"} >
             <Typography 
                 variant="h1"
                 height={150}

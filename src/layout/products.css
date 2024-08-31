@@ -53,7 +53,7 @@
 /* Extra small smartphone screens (under 480px) */
 @media (max-width: 480px) {
     .products_form {
-        width: 70%; 
+        width: 95%; 
         float: left;
         padding: 10px;
     }
