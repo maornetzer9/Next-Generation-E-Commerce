@@ -1,10 +1,8 @@
 .categories_form {
-    height: auto;
-    min-height: 80vh;
     display: flex;
+    margin-top: 70px;
     justify-content: center;
     align-items: center;
-    margin: auto;
 }
 
 .categories_inner_form {
@@ -38,7 +36,6 @@
     background-color: #0056b3;
 }
 
-/* Small mobile devices (under 480px) */
 @media (max-width: 480px) {
     .categories_form {
         width: 100%;
@@ -74,7 +71,6 @@
     }
 }
 
-/* Tablet and larger screens */
 @media (min-width: 768px) {
     .categories_form {
         width: 85%;
@@ -101,7 +97,6 @@
     }
 }
 
-/* Desktop screens */
 @media (min-width: 1024px) {
     .categories_inner_form {
         padding: 40px;

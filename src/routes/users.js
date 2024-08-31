@@ -36,3 +36,19 @@ export const handleCustomerUpdate = async ( form, url ) => {
         console.error('Request Failed To Update Customer Details:', error.message);
     }
 };
+
+
+export const handleDisconnect = async ( token, url ) => {
+    try
+    {
+          const { data } = await axios.get(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        
+        return data
+    }
+    catch(error)
+    {
+        console.error('Request Failed To Disconnect User', error.message);
+    }
+};

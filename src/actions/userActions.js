@@ -1,4 +1,6 @@
-import { handleAuth, handleCustomerUpdate, handleLogin, handleRegister } from "../routes/users";
+import { handleAuth, handleCustomerUpdate, handleDisconnect, handleLogin, handleRegister } from "../routes/users";
+
+export const LOADING = 'LOADING';
 
 export const AUTH = 'AUTH';
 export const AUTH_FAILURE = 'AUTH_FAILURE';
@@ -9,9 +11,12 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const REGISTER = 'REGISTER';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
-
 export const USER_DETAILS_UPDATE = 'USER_DETAILS_UPDATE';
 export const USER_DETAILS_UPDATE_FAILURE = 'USER_DETAILS_UPDATE_FAILURE';
+
+export const USER_DISCONNECT = 'USER_DETAILS_UPDATE';
+export const USER_DISCONNECT_FAILURE = 'USER_DISCONNECT_FAILURE';
+
 
 
 export const authAction = ( token, url ) => async (dispatch) => {
@@ -28,6 +33,7 @@ export const authAction = ( token, url ) => async (dispatch) => {
         }
 
         localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('token', JSON.stringify(user.token));
         dispatch({type: AUTH, payload: user});
         return { code: 200, isAuthenticated, user };
     }
@@ -103,5 +109,28 @@ export const customerUpdateAction = ( form, url ) => async (dispatch) => {
     {
         console.error('Failed To Update Customer Details', error.message);
         dispatch({ type: USER_DETAILS_UPDATE_FAILURE, payload: error.message });
+    }
+};
+
+export const disconnectAction = ( token, url ) => async (dispatch) => {
+    try
+    {
+        const response = await handleDisconnect( token, url );
+        const { code, message } = response;
+        
+        if( code !== 200 )
+        {
+            dispatch({ type: USER_DISCONNECT_FAILURE, payload: message });
+            return { code, message };
+        }
+
+        localStorage.removeItem('token', token)
+        dispatch({ type: USER_DISCONNECT, payload: message });
+        return { code, message };
+    }
+    catch(error)
+    {
+        console.error('Failed To Disconnect User', error.message);
+        
     }
 };

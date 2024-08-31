@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import { Drawer, List, ListItem, ListItemText, Divider, Typography, Box, Toolbar, FormControlLabel, Switch } from '@mui/material';
 import { RiMenuFold2Line } from "react-icons/ri";
-import { useDispatch, useSelector } from 'react-redux';
-
 import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded';
@@ -11,32 +9,72 @@ import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import FallingStars from '../UI/FallingStars';
 import { useDarkMode } from '../hooks/darkMode';
+import { AnimatePresence, motion } from 'framer-motion';
+import { pageTransition } from '../utils/motion';
+import { disconnectAction } from '../actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { NAVIGATION_PAGE } from '../utils/textFieldForms';
-
-
-export default function Customer() {
+const Customer = React.forwardRef(() => {
 
     const { user } = useSelector((state) => state.userReducer);
-
+    
+    const USER_DISCONNECT_URL = 'http://localhost:3000/customers/disconnect';
+    
+    const dispatch = useDispatch();
     const [ darkMode, toggleDarkMode ] = useDarkMode();
 
+    const handleDisconnect = async () => {
+        try
+        {
+            if( !user.token ) return <div> Error: User Not Found </div>
+            await dispatch( disconnectAction( user.token, USER_DISCONNECT_URL ) )
+        }
+        catch(error)
+        {
+            console.error('Failed To Disconnect Admin', error.message);
+        }
+    }
+
     const NAVIGATION_PAGE = [
-        { label: 'My Account', page: 'account',  buttonLabels: ['Update', 'Delete'], icon: <AccountCircleOutlinedIcon/>},
-        { label: 'My Orders', page: 'orders',    buttonLabels: ['Update', 'Delete'], icon: <ListAltRoundedIcon/> },
-        { label: 'Products', page: 'products',   buttonLabels: ['Update', 'Delete'], icon: <Inventory2OutlinedIcon/> },
-        { label: 'Logout', page: '/',            buttonLabels: ['Update', 'Delete'], icon: <ExitToAppRoundedIcon/> }
+        { 
+            label: 'My Account', page: 'account',  
+            buttonLabels: ['Update', 'Delete'], 
+            icon: <AccountCircleOutlinedIcon/>
+        },
+        { 
+            label: 'My Orders', page: 'orders',    
+            buttonLabels: ['Update', 'Delete'], 
+            icon: <ListAltRoundedIcon/> 
+        },
+        { 
+            label: 'Products', page: 'products',   
+            buttonLabels: ['Update', 'Delete'], 
+            icon: <Inventory2OutlinedIcon/> 
+        },
+        { 
+            label: 'Logout', page: '/',            
+            buttonLabels: ['Update', 'Delete'], 
+            icon: <ExitToAppRoundedIcon/>, 
+            handler: handleDisconnect
+        }
       ];
 
     const drawerWidth = 240;
-    const dispatch = useDispatch();
     const [preview, setPreview] = useState(false);
 
     const handleMenuToggle = () => setPreview(prevState => !prevState);
 
- 
+    
 return (
-    <Box sx={{ display: 'flex', color: darkMode ? 'white' : 'black' }}>
+    <motion.div 
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={pageTransition}
+        style={{ 
+            display: 'flex', 
+            color: darkMode ? 'white' : 'black' 
+        }}>
 
       {darkMode && <FallingStars />}
 
@@ -110,7 +148,7 @@ return (
                        width: '100%' 
                    }}
                >
-              <ListItemText primary={item.label} />
+              <ListItemText primary={item.label} onClick={item?.handler}/>
               <ListItemSecondaryAction>
                 {item.icon}
               </ListItemSecondaryAction>
@@ -127,16 +165,20 @@ return (
         sx={{
             overflow:'hidden',
           flexGrow: 1,
-          p: 3,
+        //   p: 3,
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           marginLeft: { sm: `${drawerWidth}px` },
         }}
       >
 
-        <Outlet />
+        <AnimatePresence mode='wait'>
+            <Outlet />
+        </AnimatePresence>
         <Toolbar />
       </Box>
 
-    </Box>
+    </motion.div>
   )
-}
+});
+
+export default Customer

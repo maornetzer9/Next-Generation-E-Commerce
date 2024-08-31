@@ -29,15 +29,15 @@ export default function FilterModel({ categories, onCategoryChange, onPriceChang
         position="static" 
         color="transparent" 
         elevation={0}
-        sx={{ mt: 5, px: 2 }}
+        sx={{ mt: 5, px: 2, }}
     >
       <Toolbar
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' }, // Stack items on small screens, row on larger screens
+          flexDirection: { xs: 'column', sm: 'row' }, 
           alignItems: 'center',
-          justifyContent: { xs: 'center', sm: 'space-between' }, // Center items on small screens, space between on larger screens
-          gap: { xs: 2, sm: 0 }, // Add gap between items on small screens
+          justifyContent: { xs: 'center', sm: 'space-between' }, 
+          gap: { xs: 2, sm: 0 }, 
         }}
       >
         {/* Dropdown for categories */}

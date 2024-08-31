@@ -3,7 +3,7 @@ import { ADD_NEW_PRODUCT, ADD_NEW_PRODUCT_FAILURE, CREATE_CATEGORY, CREATE_CATEG
 const initialState = {
     product: {},
     products: [],
-    error: null
+    error: null,
 };
 
 
@@ -69,7 +69,7 @@ export const productsReducer = ( state = initialState, action ) => {
          
         }
         case DELETE_CATEGORIES: {
-            const products = state.products.filter((product) => product.category === action.payload);
+            const products = state.products.filter((product) => product.category !== action.payload);
 
             return {
                 ...state,
@@ -87,7 +87,6 @@ export const productsReducer = ( state = initialState, action ) => {
                 error: null,
             };
         }
-
 
         case FETCH_PRODUCTS_FAILURE: 
         case UPDATE_PRODUCT_FAILURE:

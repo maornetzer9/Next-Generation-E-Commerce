@@ -7,7 +7,9 @@ import
         REGISTER, 
         REGISTER_FAILURE, 
         USER_DETAILS_UPDATE, 
-        USER_DETAILS_UPDATE_FAILURE
+        USER_DETAILS_UPDATE_FAILURE,
+        USER_DISCONNECT,
+        USER_DISCONNECT_FAILURE
  }
 from "../actions/userActions";
 
@@ -22,6 +24,7 @@ export const initialState = {
         orders: []
     },
     users: [],
+    loading: false,
     error: null
 };
 
@@ -61,13 +64,25 @@ export const userReducer = (( state = initialState, action  ) => {
                 error: null
             }
         }
+
+        case USER_DISCONNECT: {
+
+            return {
+                ...state,
+                user: null,
+                users: null,
+                error: null
+            }
+        }
         
         case AUTH_FAILURE:
         case LOGIN_FAILURE:
         case REGISTER_FAILURE:
         case USER_DETAILS_UPDATE_FAILURE:    
+        case USER_DISCONNECT_FAILURE:    
             return {
                 ...state,
+                loading: false,
                 error: action.payload,
             };
     

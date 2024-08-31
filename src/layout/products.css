@@ -1,6 +1,6 @@
-/* Base styles for desktop and larger screens */
 .products_form {
-    width: 85%;
+    width: 80%;
+    margin-top: 50px !important;
     box-shadow: 1px 1px 2px 2px lightgray;
     border-radius: 20px;
     background-color: rgba(211, 211, 211, 0.082);
@@ -8,23 +8,17 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: auto; /* Centers the form on the page */
+    margin: auto;
     padding: 20px;
 }
 
 .products_inner_form {
-    width: 70%;
-    display: flex;
-    margin: 20px;
-    justify-content: space-evenly;
-    flex-direction: column;
+    margin-bottom: 50px;
     background-color: #ffffff;
     box-shadow: 1px 1px 2px 1px #4c9bd43f;
-    padding: 20px;
     border-radius: 20px;
 }
 
-/* Tablet and small desktop screens (768px - 1024px) */
 @media (max-width: 1024px) {
     .products_form {
         width: 90%; 
@@ -37,7 +31,6 @@
     }
 }
 
-/* Smartphone screens (under 768px) */
 @media (max-width: 768px) {
     .products_form {
         width: 95%; 
@@ -50,7 +43,6 @@
     }
 }
 
-/* Extra small smartphone screens (under 480px) */
 @media (max-width: 480px) {
     .products_form {
         width: 95%; 

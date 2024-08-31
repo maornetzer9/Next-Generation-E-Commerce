@@ -4,6 +4,9 @@
     gap: 50px;
 }
 
+.statistics_header {
+    margin-bottom: 30px !important;
+}
 
 @media (max-width: 480px) {
     .statistics_container {

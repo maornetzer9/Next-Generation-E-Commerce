@@ -3,8 +3,8 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Box, Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
-import '../../layout/pie-graph.css';
 import { useDarkMode } from '../../hooks/darkMode';
+import '../../layout/pie-graph.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -58,12 +58,12 @@ export default function PieGraph() {
 
     const options = {
         responsive: true,
-        maintainAspectRatio: false,  // Allows the chart to adjust based on its container size
+        maintainAspectRatio: false,  
         plugins: {
             legend: {
                 position: 'top',
                 labels: {
-                    padding: 20, // Adds space between legend items and chart
+                    padding: 20, 
                 },
             },
             title: {
@@ -71,7 +71,7 @@ export default function PieGraph() {
                 text: 'Categories',
                 padding: {
                     top: 20,
-                    bottom: 40, // Adjusts the space between title and the chart
+                    bottom: 40, 
                 },
             },
         },
@@ -92,7 +92,7 @@ export default function PieGraph() {
         },
         cutout: '20%', 
     };
-
+    
     return (
         <Box 
             id='pie_form'

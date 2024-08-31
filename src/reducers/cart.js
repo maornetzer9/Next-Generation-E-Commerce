@@ -11,10 +11,18 @@ import
     UPDATE_CART_FAILURE 
 } 
 from "../actions/cartActions";
+import { LOADING } from "../actions/userActions";
 
 export const cartReducer = (state = initialState, action) => {
     switch (action.type) 
     {        
+        case LOADING: {
+            return {
+                ...state,
+                loading: action.payload,
+                error: null,
+            }
+        }
         case LOAD_CART: {
             return {
                 ...state,
@@ -55,6 +63,7 @@ export const cartReducer = (state = initialState, action) => {
                         total: total
                     }
                 },
+                loading: false,
                 error: null
             };
             
@@ -93,6 +102,7 @@ export const cartReducer = (state = initialState, action) => {
                         total,
                     }
                 },
+                loading: false,
                 error: null
             };
         }
@@ -130,6 +140,7 @@ export const cartReducer = (state = initialState, action) => {
         case DELETE_FROM_CART_FAILURE:
             return {
                 ...state,
+                loading: false,
                 error: action.payload,
             };
         default:

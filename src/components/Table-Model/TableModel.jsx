@@ -1,9 +1,11 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Divider } from "@mui/material";
-import { useSelector } from "react-redux";
 import Loader from "../../UI/Loader";
+import { useSelector } from "react-redux";
 import { useDarkMode } from "../../hooks/darkMode";
 import './table-model.css';
+import { motion } from "framer-motion";
+import { headContentAnimation, headTextAnimation } from "../../utils/motion";
 
 function TableModel({
     label,
@@ -18,7 +20,7 @@ function TableModel({
 
     const [darkMode] = useDarkMode();
 
-    if (!user?.orders?.length && !users?.length) return <Loader />;
+    // if (!user?.orders?.length && !users?.length) return <Loader />;
 
     const usersWithOrders = users.filter((user) => user.orders.length > 0);
 
@@ -202,9 +204,9 @@ function TableModel({
             </TableContainer>
         </Box>
     );
-
+    
     return (
-        <Box sx={{ width: tableWidth }}>
+        <motion.div style={{ width: tableWidth }} { ...headContentAnimation }>
             {user?.orders.length > 0 && !adminTable && (
                 <TableContainer component={Paper} className="tableContainer">
                     <Table aria-label="simple table">
@@ -224,7 +226,10 @@ function TableModel({
             )}
 
             {adminTable && (
-                <Box component={'div'}>
+                <motion.div 
+                    drag={ darkMode ? true : false } 
+                    {...headTextAnimation} 
+                >
                     <Typography 
                         variant="h1" 
                         height={150}
@@ -256,11 +261,11 @@ function TableModel({
                             </Table>
                         </TableContainer>
                     ) : null}
-                </Box>
+                </motion.div>
             )}
 
             {!adminTable && usersWithOrders.map(renderUserOrdersTable) }
-        </Box>
+        </motion.div>
     );
 }
 

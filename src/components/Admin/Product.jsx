@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useCallback, useState } from "react";
 import { Box, Button, FormLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,7 +8,7 @@ import { modifyProductsAction } from "../../actions/productActions";
 import { useDarkMode } from "../../hooks/darkMode";
 import _ from 'lodash'
 
-export default function Product({ product }) {
+function Product({ product }) {
     const MODIFY_PRODUCT_URL = "http://localhost:3000/products/modify";
     const [darkMode] = useDarkMode();
 
@@ -16,17 +16,21 @@ export default function Product({ product }) {
     const [editData, setEditData] = useState(product);
 
     const dispatch = useDispatch();
-    const handleEditClick = () => setIsEditing(true);
 
-    const modifyProducts = async () => {
-        if(_.isEqual(editData, product) && _.isEqual(editData.purchases, product.purchases)) 
+    const handleEditClick = useCallback(() => {
+        setIsEditing(true);
+    }, []);    
+    const modifyProducts = useCallback(async () => {
+
+        if (_.isEqual(editData, product) && _.isEqual(editData.purchases, product.purchases)) 
         {
             return setIsEditing(false);
         }
 
         await dispatch(modifyProductsAction(editData, MODIFY_PRODUCT_URL));
         setIsEditing(false);
-    };
+
+    }, [dispatch, editData, product]);
 
     const handleChange = ({ target: { name, value } }) => {
         setEditData((prevData) => ({
@@ -227,3 +231,5 @@ export default function Product({ product }) {
         </Box>
     );
 }
+
+export default memo(Product);

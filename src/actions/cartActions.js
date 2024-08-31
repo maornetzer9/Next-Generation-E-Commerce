@@ -1,3 +1,4 @@
+import { LOADING } from "./userActions";
 import {  handleAddToCart,  handleDeleteFromCart,  handleLoadCart,  handleRemoveFromCart } from "../routes/cart";
 
 export const LOAD_CART = 'LOAD_CART';
@@ -37,9 +38,11 @@ export const loadCartAction = ( userId, CART_URL_LOAD ) => async (dispatch) => {
     }
 };
 
+
 export const addToCartAction = ( userId, product, url ) => async (dispatch) => {
     try
     {
+        dispatch({ type: LOADING, payload: true });
         const response = await handleAddToCart(userId, product, url);
         const { code, message, newProduct, total } = response;
         
@@ -59,9 +62,11 @@ export const addToCartAction = ( userId, product, url ) => async (dispatch) => {
     }
 };
 
+
 export const removeFromCartAction = ( userId, product, url ) =>  async (dispatch) => {
     try
     {
+        dispatch({ type: LOADING, payload: true });
         const response = await handleRemoveFromCart( userId, product, url );
         const { code, message, updatedProduct, total } = response;
         
@@ -80,6 +85,7 @@ export const removeFromCartAction = ( userId, product, url ) =>  async (dispatch
         return { code: 6, message: error.message };
     }
 };
+
 
 export const deleteFromCartAction = ( id, _id, url ) =>  async (dispatch) => {
     try

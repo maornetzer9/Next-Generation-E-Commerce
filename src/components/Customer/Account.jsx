@@ -2,18 +2,17 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { REGISTRATION_FORM } from "../../utils/textFieldForms";
 import { customerUpdateAction } from "../../actions/userActions";
-import Loader from "../../UI/Loader";
 import FormModel from "../Form-Model/FormModel";
 
 export default function Account() {
     
-  const CUSTOMER_UPDATE_URL = "http://localhost:3000/customers/update";
-
+  const user = useSelector((state) => state.userReducer.user);
+  
   const dispatch = useDispatch();
+
+  const CUSTOMER_UPDATE_URL = "http://localhost:3000/customers/update";
   
   const [edit, setEdit] = useState(false);
-  const user = useSelector((state) => state.userReducer.user);
-
   const [form, setForm] = useState({ checked: false });
 
   // Initialize form state with default values
@@ -37,25 +36,28 @@ export default function Account() {
     }));
   };
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    try
+    {
+        e.preventDefault();
 
-    const { firstName, lastName, username } = form;
+        const { firstName, lastName, username } = form;
 
-    if ( !firstName || !lastName || !username)
-      return alert("One or more of the details are missing");
+        if ( !firstName || !lastName || !username) return alert("Invalid Form");
 
-    // Uncomment and correctly handle the dispatch action
-    const response = await dispatch( customerUpdateAction(form, CUSTOMER_UPDATE_URL)) ;
-    const { code, message } = response;
+        const response = await dispatch( customerUpdateAction(form, CUSTOMER_UPDATE_URL)) ;
+        const { code, message } = response;
 
-    if (code !== 200) return alert(message);
+        if (code !== 200) return alert(message);
 
-    handleEditMode();
+        handleEditMode();
+    }
+    catch(error)
+    {
+        console.error('Failed To Update User Form', error.message);
+        
+    }
   };
-
-  if (!user) return <Loader />;
 
   return (
     <FormModel

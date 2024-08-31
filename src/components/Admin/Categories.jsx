@@ -1,11 +1,13 @@
-import { Box, Button, TextField, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { createCategoryAction, loadProductsAction } from '../../actions/productActions'
-import Category from './Category'
-import Loader from '../../UI/Loader'
-import { useDarkMode } from '../../hooks/darkMode'
-import '../../layout/categories.css'
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { Box, Button, TextField, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { createCategoryAction, loadProductsAction } from '../../actions/productActions';
+import { useDarkMode } from '../../hooks/darkMode';
+import { motion } from 'framer-motion';
+import Category from './Category';
+import Loader from '../../UI/Loader';
+import { headTextAnimation } from '../../utils/motion';
+import '../../layout/categories.css';
 
 export default function Categories() {
     const { products } = useSelector((state) => state.productsReducer);
@@ -14,73 +16,90 @@ export default function Categories() {
     const CREATE_CATEGORIES_URL = "http://localhost:3000/products/create";
 
     const dispatch = useDispatch();
-    const [ darkMode ] = useDarkMode();
-    const [ newCategory, setNewCategory ] = useState('');
+    const [darkMode] = useDarkMode();
+    const [newCategory, setNewCategory] = useState('');
 
-    const categoriesProduct = [...new Set(products.map((product) => product.category))];
+    // Memoize the categories array to avoid recalculating it on every render
+    const categoriesProduct = useMemo(() => [...new Set(products.map((product) => product.category))], [products]);
 
-    const handleOnChange = ( { target: { value } } ) => setNewCategory( value );
+    // Memoize the onChange handler to avoid unnecessary re-renders
+    const handleOnChange = useCallback(({ target: { value } }) => setNewCategory(value), []);
 
-    const handleCreateCategory = async () => {
+    // Memoize the create category handler to avoid unnecessary re-renders
+    const handleCreateCategory = useCallback(async () => {
+        try 
+        {
+            if (newCategory === "") return alert('Please Add Category Name');
+            await dispatch( createCategoryAction( newCategory, CREATE_CATEGORIES_URL ) );
+            setNewCategory(''); // Clear the input after category creation
+        } 
+        catch(error) 
+        {
+            console.error('Failed To Create New Category', error.message);
+        }
+    }, [newCategory, dispatch]);
 
-        if( newCategory === "" ) return alert('You Need To Add Category Name');
-
-        await dispatch( createCategoryAction( newCategory, CREATE_CATEGORIES_URL) )
-    } 
-
+    
     useEffect(() => {
         const fetchProducts = async () => {
-            await dispatch( loadProductsAction( PRODUCTS_URL_LOAD ) );
-        }
+            try 
+            {
+                await dispatch(loadProductsAction(PRODUCTS_URL_LOAD));
+            } 
+            catch(error) 
+            {
+                console.error('Failed To Load Products Category', error.message);
+            }
+        };
         fetchProducts();
-    }, [ dispatch, products.length ]);
+    }, [dispatch]);
 
-    if( !categoriesProduct.length ) return <Loader/>
+    if (!categoriesProduct.length) return <Loader />;
 
-  return (
-    <Box 
-        component={'div'} 
-        className='categories_form'
-    >
-        <Box 
-            component={'div'} 
-            className='categories_inner_form'
-            sx={{
-                bgcolor: darkMode ? 'transparent' : 'transparent',
-                boxShadow: darkMode ? '1px 1px 2px 1px white' : '1px 1px 2px 1px black'
-                
-            }}
+    return (
+        <motion.div
+            {...headTextAnimation}
+            className='categories_form'
+            drag={darkMode ? true : false}
         >
-            <Typography 
-                variant='h2'
-                className="categories_header"
-                sx={{ 
-                    padding: '20px 20px', 
-                    textAlign:'center',
-                    fontWeight: 800, 
-                    color: darkMode ? "white" :'black'
-            }}
-            >
-                Categories
-            </Typography>            
-
-            {categoriesProduct.map((category, index) => <Category key={index} category={category}/>)}
-
-            <Box 
+            <Box
                 component={'div'}
-                className='new_category'
+                className='categories_inner_form'
+                sx={{
+                    bgcolor: darkMode ? 'transparent' : 'transparent',
+                    boxShadow: darkMode ? '1px 1px 2px 1px white' : '1px 1px 2px 1px black'
+                }}
             >
-                <TextField onChange={handleOnChange} 
-                    sx={{ 
-                        width: '80%', 
-                        bgcolor: darkMode ? 'white' : ''
-                    }} 
-                    variant='outlined' 
-                    placeholder='Enter new category'
-                />
-                <Button onClick={handleCreateCategory} variant='contained'> Add </Button>
+                <Typography
+                    variant='h2'
+                    className="categories_header"
+                    sx={{
+                        padding: '20px 20px',
+                        textAlign: 'center',
+                        fontWeight: 800,
+                        color: darkMode ? "white" : 'black'
+                    }}
+                >
+                    Categories
+                </Typography>
+
+                { categoriesProduct.map((category, index) => <Category key={index} category={category} />) }
+
+                <Box
+                    component={'div'}
+                    className='new_category'
+                >
+                    <TextField value={newCategory} onChange={handleOnChange}
+                        sx={{
+                            width: '80%',
+                            bgcolor: darkMode ? 'white' : ''
+                        }}
+                        variant='outlined'
+                        placeholder='Enter new category'
+                    />
+                    <Button onClick={handleCreateCategory} variant='contained'> Add </Button>
+                </Box>
             </Box>
-        </Box>
-    </Box>
-  )
+        </motion.div>
+    );
 }

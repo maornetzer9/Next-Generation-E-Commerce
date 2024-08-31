@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import QtyGraph from "./QtyGraph";
-import PieGraph from "./PieGraph";
 import { Box, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { loadUsersOrders } from "../../actions/orderActions";
+import PieGraph from "./PieGraph";
+import QtyGraph from "./QtyGraph";
+import { motion } from 'framer-motion';
+import { headContentAnimation } from "../../utils/motion";
 import "../../layout/statistics.css";
 
 export default function Statistics() {
@@ -14,20 +16,36 @@ export default function Statistics() {
     
     useEffect(() => {
         const fetchUsersOrders = async () => {
-            dispatch( loadUsersOrders( LOAD_ADMIN_ORDERS_URL ) )
+            try
+            {
+                await dispatch( loadUsersOrders( LOAD_ADMIN_ORDERS_URL ) )
+            }
+            catch(error)
+            {
+                console.error('Failed To Load Users Orders On The Statistics Page', error.message);
+            }
         }
         fetchUsersOrders()
     }, [])
 
     return (
-        <Box component={'div'} className="statistics_container">
+        <motion.div 
+        {...headContentAnimation} 
+        className="statistics_container"
+        >
 
-            <Typography  className="statistics_header" variant="h2" sx={{textAlign:'center'}} >Statistics</Typography>
+            <Typography 
+                variant="h2" 
+                sx={{textAlign:'center'}} 
+                className="statistics_header" 
+            >
+                Statistics
+            </Typography>
 
             <Box id="statistics_form" component={"div"}>
                 <PieGraph />
                 <QtyGraph />
             </Box>
-        </Box>
+        </motion.div>
     );
 }

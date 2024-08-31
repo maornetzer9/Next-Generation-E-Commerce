@@ -21,24 +21,37 @@ export default function Category({ category }) {
     const handleOnChange = ( { target: { value } } ) => setNewCategory( value );
 
     const handleDeleteCategories = async ( category ) => {
-        await dispatch( deleteCategoriesAction( category, DELETE_CATEGORIES_URL ) );
+        try
+        {
+            await dispatch( deleteCategoriesAction( category, DELETE_CATEGORIES_URL ) );
+        }
+        catch(error)
+        {
+            console.error('Failed To Delete Category', error.message);
+        }
     };
 
     const handleUpdateCategories = async ( category ) => {
-
-        if (!newCategory.trim() || newCategory === category )  
+        try
         {
-            alert("You Cannot Save It Without a Name or Save Under The Same Name.");
-            return handleEditMode();
+            if (!newCategory.trim() || newCategory === category )  
+            {
+                alert("You Cannot Save It Without a Name or Save Under The Same Name.");
+                return handleEditMode();
+            }
+                
+            const categories = { old: category, new: newCategory }
+            const response = await dispatch( updateCategoriesAction( categories, UPDATE_CATEGORIES_URL ) );
+            const { code, message } = response;
+        
+            if( code !== 200) return alert(message);
+        
+            handleEditMode();
         }
-            
-        const categories = { old: category, new: newCategory }
-        const response = await dispatch( updateCategoriesAction( categories, UPDATE_CATEGORIES_URL ) );
-        const { code, message } = response;
-
-        if( code !== 200) return alert(message);
-
-        handleEditMode();
+        catch(error)
+        {
+            console.error('Failed To Update Category Name', error.message);
+        }
     };
 
     return (
@@ -64,43 +77,42 @@ export default function Category({ category }) {
                 </FormLabel> 
             }
 
-        <Box 
-            component={'div'}
-        >
-        { 
-          !edit ? 
-              <Button 
-                variant="text" 
-                color="primary"
-                sx={{outline:'none'}}
-                endIcon={<EditIcon/>}
-                onClick={handleEditMode}
-              >
-                  Edit
-              </Button>
-          :
-              <Button 
-                  onClick={() => handleUpdateCategories(category)}
-                  endIcon={<SaveAltIcon/>}
-                  sx={{outline:'none'}}
-                  variant="text" 
-                  color="primary"
-              >
-                  Save
-              </Button>
-        }
-
-            <Button 
-                variant="text" 
-                color="error"
-                sx={{outline:'none'}}
-                onClick={() => handleDeleteCategories(category)}
-                endIcon={<DeleteForeverIcon/>}
+            <Box 
+                component={'div'}
             >
-                Delete
-            </Button>
-        </Box>
+            { 
+              !edit ? 
+                  <Button 
+                    variant="text" 
+                    color="primary"
+                    sx={{outline:'none'}}
+                    endIcon={<EditIcon/>}
+                    onClick={handleEditMode}
+                  >
+                      Edit
+                  </Button>
+              :
+                  <Button 
+                      onClick={() => handleUpdateCategories(category)}
+                      endIcon={<SaveAltIcon/>}
+                      sx={{outline:'none'}}
+                      variant="text" 
+                      color="primary"
+                  >
+                      Save
+                  </Button>
+            }
 
+                <Button 
+                    variant="text" 
+                    color="error"
+                    sx={{outline:'none'}}
+                    onClick={() => handleDeleteCategories(category)}
+                    endIcon={<DeleteForeverIcon/>}
+                >
+                    Delete
+                </Button>
+            </Box>
         </Box>
     );
 }

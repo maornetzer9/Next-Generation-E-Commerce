@@ -1,13 +1,13 @@
 import { Box, IconButton, Typography } from "@mui/material";
 import React from "react";
-import Loader from "../../UI/Loader";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
+import { useSelector } from "react-redux";
 import "../../layout/product.css";
 
 export default function Product({ index = 1, item = {}, quantity = 0, addToCart= () => {}, removeFromCart = () => {} }) {
 
-    if (!item) return <Loader />;
+    const { loading } = useSelector((state) => state.cartReducer);
     
     return (
         <Box component={"div"}>
@@ -15,7 +15,6 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                 component={"div"} 
                 className="product_content_form"
             >
-
             <Box 
                 component={"div"} 
                 className="product_content"
@@ -26,7 +25,7 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                     Description: {item.description}
                 </Typography>
 
-                <Typography variant="body1">Price: ${item.price}</Typography>
+                <Typography variant="body1">Price: ${item.price.toFixed(2)}</Typography>
 
                 <Typography variant="body1">In Stock: {item.stock}</Typography>
 
@@ -34,7 +33,8 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                     component={'div'} 
                     className="product_amount_form"
                 >
-                    <IconButton 
+                    <IconButton
+                        disabled={loading}
                         color="primary"
                         onClick={ () => addToCart( item, index ) }
                         sx={{
@@ -66,6 +66,7 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                     </Typography>
 
                     <IconButton 
+                        disabled={loading}
                         color="error" 
                         onClick={ () => removeFromCart( item, index ) }
                         sx={{ 

@@ -15,19 +15,33 @@ import "../../layout/cart.css";
 // TODO: Separate the logic and the styles
 export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCart = () => {} }) {
 
+    const { cart } = useSelector((state) => state.cartReducer.user);
+    const { loading } = useSelector((state) => state.cartReducer);
+    
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const NEW_ORDER_URL = 'http://localhost:3000/orders/add';
     const CART_URL_DELETE = 'http://localhost:3000/cart/delete';
 
     const [preview, setPreview] = useState(false);
     const [cartWidth, setCartWidth] = useState(370);
     const [isFlipped, setIsFlipped] = useState(false);
-    const { cart } = useSelector((state) => state.cartReducer.user);
     
     const handleMenuToggle = () => setPreview((prevState) => !prevState);
 
-    const handleDeleteFromCart = async ( id ) => await dispatch( deleteFromCartAction( id, user._id, CART_URL_DELETE ) );
+    const handleDeleteFromCart = async ( id ) => 
+    {
+        try
+        {
+            await dispatch( deleteFromCartAction( id, user._id, CART_URL_DELETE ) );
+        }
+        catch(error)
+        {
+            console.error('Failed To Delete From Cart', error.message);
+            
+        }
+    }
 
     const handleCartFullWidth = () => {
         cartWidth === 370 ? setCartWidth('100%') : setCartWidth(370);
@@ -35,12 +49,20 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
     }
 
     const handleNewOrder = async () => {
-       const response = await dispatch( newOrderAction( user._id, NEW_ORDER_URL  ) )
-        const { code, message } = response;
+        try
+        {
+            const response = await dispatch( newOrderAction( user._id, NEW_ORDER_URL  ) )
+            const { code, message } = response;
 
-        if( code !== 200 ) return alert(message);
+            if( code !== 200 ) return alert(message);
 
-        navigate('/customer/orders')
+            navigate('/customer/orders')
+        }
+        catch(error)
+        {
+            console.error('Failed To Handle New Order', error.message);
+        }
+
     }
     
     return (
@@ -62,8 +84,8 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
             <Drawer
                 anchor="left"
                 variant="persistent"
-                open={true}
-                // onClose={handleMenuToggle}
+                open={preview}
+                onClose={handleMenuToggle}
                 // disableRestoreFocus
                 // disableEnforceFocus
                 sx={{
@@ -87,6 +109,7 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
 
                 <List>
                     <IconButton
+                        disabled={loading}
                         onClick={handleCartFullWidth}
                         style={{ 
                             cursor: "pointer", 
@@ -124,19 +147,21 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                                       />
                                       <ListItemSecondaryAction className="cart_actions">
                                           <IconButton 
+                                            disabled={loading}
                                             className="cart_buttons"
                                             onClick={() => removeFromCart(item, index)}
                                           >
-                                              <Remove sx={{ fontSize:'15px' }} color="warning" />
+                                              <Remove sx={{ fontSize:'15px' }} color={loading ? "disabled" : "warning"} />
                                           </IconButton>
                                           <Typography sx={{margin:'0px 10px', outline: 'none'}} variant="body2">
                                               {item.quantity}
                                           </Typography>
-                                          <IconButton 
+                                          <IconButton
+                                            disabled={loading}
                                             className="cart_buttons"
                                             onClick={() => addToTheCart(item, index)}
                                           >
-                                              <Add sx={{ fontSize:'15px' }} color="primary" />
+                                              <Add sx={{ fontSize:'15px' }} color={loading ? "disabled" : "primary"} />
                                           </IconButton>
                                           <IconButton 
                                             edge="end" 
@@ -173,7 +198,7 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                         >
                             Order
                             {" "}
-                            {cart.total.toFixed(2)}
+                            {cart?.total.toFixed(2)}
                             <ShopTwoIcon color="success" />
                         </IconButton>
                 </List>

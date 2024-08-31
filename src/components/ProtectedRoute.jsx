@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { authAction } from '../actions/userActions';
+import { AnimatePresence, motion } from 'framer-motion'
+import { pageTransition } from '../utils/motion';
 import Loader from '../UI/Loader';
 
 const ProtectedRoute = ({ allowedRoles }) => {
@@ -57,8 +59,23 @@ const ProtectedRoute = ({ allowedRoles }) => {
     }, [token]);
 
     if (loading) return <Loader />;
-    
-    return isAuthenticated && allowedRoles.includes(role) ? <Outlet /> : <Navigate to="/" />;
-};
+
+    return (
+        <AnimatePresence mode="wait">
+          {isAuthenticated && allowedRoles.includes(role) ? (
+            <motion.div
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              variants={pageTransition}
+            >
+              <Outlet />
+            </motion.div>
+          ) : (
+            <Navigate to="/" />
+          )}
+        </AnimatePresence>
+      );
+    };
 
 export default ProtectedRoute;

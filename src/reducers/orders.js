@@ -38,6 +38,7 @@ export const ordersReducer = ( state = initialState, action ) => {
         case LOAD_ADMIN_ORDERS_FAILURE: 
             return {
                 ...state, 
+                loading: false,
                 error: action.payload
             }
 

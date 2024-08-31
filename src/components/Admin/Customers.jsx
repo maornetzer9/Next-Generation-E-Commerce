@@ -12,7 +12,15 @@ export default function Customers() {
     
     useEffect(() => {
         const fetchUsersOrders = async () => {
+            try
+            {
             dispatch( loadUsersOrders( LOAD_ADMIN_ORDERS_URL ) )
+            }
+            catch(error)
+            {
+                console.error('Failed To Load Users Orders On Admin Panel', error.message);
+                
+            }
         }
         fetchUsersOrders()
     }, [])
