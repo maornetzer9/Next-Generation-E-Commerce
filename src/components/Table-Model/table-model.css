@@ -75,7 +75,6 @@
     }
 }
 
-
 @media (max-width: 768px) {
 
     .user_table_container {
@@ -149,9 +148,7 @@
 
     .tableContainer{
         width: 100% !important;
-    }
-
-    .tableCell {
+        margin-left: 10px !important;
     }
 
     .tableCell,

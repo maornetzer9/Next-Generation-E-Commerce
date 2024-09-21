@@ -1,10 +1,10 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Divider } from "@mui/material";
+import { headContentAnimation, headTextAnimation } from "../../utils/motion";
 import { useSelector } from "react-redux";
 import { useDarkMode } from "../../hooks/darkMode";
-import './table-model.css';
 import { motion } from "framer-motion";
-import { headContentAnimation, headTextAnimation } from "../../utils/motion";
+import './table-model.css';
 
 function TableModel({
     label,

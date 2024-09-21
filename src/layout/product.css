@@ -1,4 +1,3 @@
-/* Base styles for desktop and larger screens */
 .product_content_form {
     margin: 20px;
     display: flex;
@@ -7,7 +6,7 @@
 }
 
 .product_content {
-    width: 50%; /* Default width for larger screens */
+    width: 50%; 
     display: flex;
     flex-direction: column;
     gap: 35px;
@@ -29,7 +28,6 @@
     gap: 20px;
 }
 
-/* Tablet and small desktop screens (768px - 1024px) */
 @media (max-width: 1024px) {
     .product_content {
         width: 70%; /* Slightly larger content width on tablets */
@@ -47,7 +45,6 @@
     }
 }
 
-/* Smartphone screens (under 768px) */
 @media (max-width: 768px) {
     .product_content_form {
         flex-direction: column; 
@@ -73,7 +70,6 @@
     }
 }
 
-/* Extra small smartphone screens (under 480px) */
 @media (max-width: 480px) {
     .product_content {
         width: 100%; 
