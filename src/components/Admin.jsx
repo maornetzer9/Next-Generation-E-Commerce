@@ -12,11 +12,12 @@ import FallingStars from "../UI/FallingStars";
 import { useDarkMode } from "../hooks/darkMode";
 import { useDispatch, useSelector } from "react-redux";
 import { disconnectAction } from "../actions/userActions";
+import { ORIGIN } from "../App";
 
 export default function Admin() {
     const { user } = useSelector((state) => state.userReducer);
 
-    const USER_DISCONNECT_URL = 'http://localhost:3000/customers/disconnect';
+    const USER_DISCONNECT_URL = `${ORIGIN}/customers/disconnect`;
 
     const drawerWidth = 240;
     const dispatch = useDispatch();

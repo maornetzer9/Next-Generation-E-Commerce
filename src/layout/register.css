@@ -1,3 +1,9 @@
+.register_container {
+    height: 100vh;
+    background-color: rgba(107, 106, 106, 0.651);
+
+}
+
 #register_form {
     width: 100%;
     display: flex;

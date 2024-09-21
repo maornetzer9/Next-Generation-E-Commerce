@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Divider } from "@mui/material";
-import Loader from "../../UI/Loader";
 import { useSelector } from "react-redux";
 import { useDarkMode } from "../../hooks/darkMode";
 import './table-model.css';
@@ -20,8 +19,6 @@ function TableModel({
 
     const [darkMode] = useDarkMode();
 
-    // if (!user?.orders?.length && !users?.length) return <Loader />;
-
     const usersWithOrders = users.filter((user) => user.orders.length > 0);
 
     const renderCustomerTableRow = (order, index) => (
@@ -34,6 +31,7 @@ function TableModel({
                     alignItems: "center", 
                 }}>
                 <Box 
+                    className="tableImageProduct"
                     component="img"
                     alt={order.title} 
                     src={order.thumbnail} 
@@ -49,8 +47,8 @@ function TableModel({
     );
 
     const renderAdminTableRow = () => (
-        usersWithOrders.map((user, userIndex) => (
-            <React.Fragment key={userIndex}>
+        usersWithOrders.map((user, index) => (
+            <React.Fragment key={index}>
                 <TableRow>
                     <TableCell 
                         className="tableCell" 
@@ -74,7 +72,7 @@ function TableModel({
                         {user.createAt}
                     </TableCell>
                     <TableCell className="tableCell">
-                        <TableContainer component={Paper} className="smallTableContainer" sx={{ bgcolor: darkMode ? 'transparent' : 'white' }}>
+                        <TableContainer component={Paper} className="smallTableContainer" sx={{ bgcolor: darkMode ? 'transparent' : 'white'}}>
                             <Table>
                                 <TableHead>
                                     <TableRow>
@@ -123,7 +121,7 @@ function TableModel({
                                 <TableBody>
                                     {user.orders.map((order, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="tableCell">
+                                            <TableCell className="tableCell" >
                                                 <Box 
                                                     component="img" 
                                                     alt={order.title} 
@@ -176,15 +174,12 @@ function TableModel({
                         </TableContainer>
                     </TableCell>
                 </TableRow>
-                <TableRow>
-                    <TableCell colSpan={4} style={{ padding: '16px 0' }} />
-                </TableRow>
             </React.Fragment>
         ))
     );
 
     const renderUserOrdersTable = (user) => (
-        <Box key={user._id} sx={{ mt: 4 }} className='user_table_container'>
+        <Box key={user._id} sx={{ mt: 4 }} className='user_table_container' >
             <Typography variant="h6">Orders for {user.firstName} {user.lastName}</Typography>
             <Divider sx={{ mb: 2 }} />
             <TableContainer component={Paper} className="userOrdersTableContainer">
@@ -206,7 +201,10 @@ function TableModel({
     );
     
     return (
-        <motion.div style={{ width: tableWidth }} { ...headContentAnimation }>
+        <motion.div 
+            { ...headContentAnimation }
+            style={{ width: tableWidth }} 
+        >
             {user?.orders.length > 0 && !adminTable && (
                 <TableContainer component={Paper} className="tableContainer">
                     <Table aria-label="simple table">
@@ -234,20 +232,21 @@ function TableModel({
                         variant="h1" 
                         height={150}
                         sx={{
-                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                             textAlign: 'center',
+                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                             marginBottom: { xs: '10px', sm: '20px', md: '30px' },
                         }}
                     >
                         Orders
                     </Typography>
-                    {usersWithOrders.length > 0 ? (
+                    { usersWithOrders.length > 0 ? 
                         <TableContainer 
                             component={Paper} 
+                            id="tableContainerAdmin"
                             className="tableContainer" 
                             sx={{ bgcolor: darkMode ? 'transparent' : 'white' }}
                         >
-                            <Table aria-label="simple table" sx={{ minWidth: 650 }}>
+                            <Table aria-label="simple table">
                                 <TableHead className="tableHeader">
                                     <TableRow>
                                         <TableCell className="tableCell"> Full Name </TableCell>
@@ -260,7 +259,7 @@ function TableModel({
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    ) : null}
+                    : null }
                 </motion.div>
             )}
 

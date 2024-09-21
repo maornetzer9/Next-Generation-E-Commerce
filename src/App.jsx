@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AnimatePresence } from 'framer-motion';
 import Customer from './components/Customer';
 
+export const ORIGIN = import.meta.env.VITE_ORIGIN;
+
 function App() {
 
     const location = useLocation();

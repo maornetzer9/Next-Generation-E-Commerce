@@ -6,16 +6,16 @@ import { registerAction } from "../actions/userActions";
 import { Box } from "@mui/material";
 import FormModel from "./Form-Model/FormModel";
 import '../layout/register.css';
+import { ORIGIN } from "../App";
 
 export default function Register() {
-  const REGISTER_URL = "http://localhost:3000/customers/register";
+  const REGISTER_URL = `${ORIGIN}/customers/register`;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [form, setForm] = useState({ checked: false });
 
-  // TODO: Convert it to hook   
   const handleFormChange = ({ target }) => {
     const { name, type, value, checked } = target;
 
@@ -43,6 +43,7 @@ export default function Register() {
 
 
   return (
+    <Box component={'div'} className="register_container">
     <FormModel
       formTitle="Registration"
       fields={REGISTRATION_FORM}
@@ -60,5 +61,6 @@ export default function Register() {
       redirectLink="/"
       redirectLabel="Login"
     />
+    </Box>
   );
 }

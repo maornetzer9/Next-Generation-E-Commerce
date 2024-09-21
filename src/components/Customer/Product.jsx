@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, TextField, Typography } from "@mui/material";
 import React from "react";
 import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
@@ -52,6 +52,21 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                             sx={{ borderRadius:'20px',  padding: '5px' }} 
                         />
                     </IconButton>
+                    
+                    {/* Replace the typography with that text field to multiply quantities order */}
+                    {/* <TextField
+                        // value={quantity}
+                        defaultValue={quantity}
+                        variant="outlined"
+                        sx={{
+                            margin:'auto',
+                            borderRadius:'20px !important', 
+                            width: 40,
+                            '& .MuiOutlinedInput-root': {
+                                borderRadius: '20px',
+                            },
+                        }}
+                    /> */}
 
                     <Typography 
                         variant="body3"
@@ -79,7 +94,14 @@ export default function Product({ index = 1, item = {}, quantity = 0, addToCart=
                             },
                     }}
                     >
-                        <Remove sx={{outline:'none', borderRadius:'20px', padding: '5px'}} className="cart_buttons"/>
+                        <Remove 
+                            className="cart_buttons"
+                            sx={{
+                                outline:'none', 
+                                borderRadius:'20px', 
+                                padding: '5px'
+                            }} 
+                        />
                     </IconButton>
                 </Box>
                 

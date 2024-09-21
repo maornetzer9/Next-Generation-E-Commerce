@@ -4,8 +4,8 @@ import { loadProductsAction } from "../actions/productActions";
 import { loadCartAction, addToCartAction, removeFromCartAction } from "../actions/cartActions";
 
 
-const CART_URL_LOAD = "http://localhost:3000/cart";
-const PRODUCTS_URL_LOAD = "http://localhost:3000/products";
+const CART_URL_LOAD = `${import.meta.env.VITE_ORIGIN}/cart`;
+const PRODUCTS_URL_LOAD = `${import.meta.env.VITE_ORIGIN}/products`;
 
 export const useLoadData = () => {
   const dispatch = useDispatch();
@@ -28,10 +28,10 @@ export const useLoadData = () => {
 };
 
 
-const CART_URL_ADD = "http://localhost:3000/cart/add";
-const CART_URL_REMOVE = "http://localhost:3000/cart/remove";
+const CART_URL_ADD = `${import.meta.env.VITE_ORIGIN}/cart/add`;
+const CART_URL_REMOVE = `${import.meta.env.VITE_ORIGIN}/cart/remove`;
 
-// A Custom Hook To Handle The Request Logic
+// Custom Hook To Handle The Request Logic
 export const useCartOperations = () => {
     
     const dispatch = useDispatch();

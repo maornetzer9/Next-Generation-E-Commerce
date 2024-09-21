@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import { loadOrdersAction } from "../../actions/orderActions";
 import TableModel from "../Table-Model/TableModel";
 import { motion } from "framer-motion";
 import { headTextAnimation } from "../../utils/motion";
+import { ORIGIN } from "../../App";
 
 export default function Orders() {
 
-    const CUSTOMERS_URL = 'http://localhost:3000/orders';
+    const CUSTOMERS_URL = `${ORIGIN}/orders`;
 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.userReducer)

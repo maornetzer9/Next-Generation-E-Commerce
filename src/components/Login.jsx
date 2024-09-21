@@ -4,12 +4,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, FormControl, FormLabel, TextField, Typography } from '@mui/material';
 import { loginAction } from '../actions/userActions';
 import LoginIcon from '@mui/icons-material/Login';
+import { ORIGIN } from '../App';
 import '../layout/login.css';
 
 
 export default function Login() {
 
-  const LOGIN_URL = 'http://localhost:3000/customers/login'
+  const LOGIN_URL = `${ORIGIN}/customers/login`
+  
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,6 +65,7 @@ export default function Login() {
           variant="outlined"
           margin="normal"
           fullWidth
+          required
         />
 
         <FormLabel component="legend" sx={{ fontWeight: 600 }}>
@@ -71,10 +75,11 @@ export default function Login() {
           onChange={handleForm}
           type="password"
           name="password"
-          label="Enter Username"
+          label="Enter Password"
           variant="outlined"
           margin="normal"
           fullWidth
+          required
         />
 
         <Button

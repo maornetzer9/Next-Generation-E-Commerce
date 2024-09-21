@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Drawer, List, ListItem, ListItemText, Divider, Typography, Box, Toolbar, ListItemSecondaryAction, IconButton } from "@mui/material";
-import { IoIosCart } from "react-icons/io";
+import { Drawer, List, ListItem, ListItemText, Divider, Typography, Box, Toolbar, ListItemSecondaryAction, IconButton, Badge } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCartAction } from "../../actions/cartActions";
 import { newOrderAction } from "../../actions/orderActions";
@@ -8,11 +8,13 @@ import Add from "@mui/icons-material/Add";
 import Remove from "@mui/icons-material/Remove";
 import Delete from "@mui/icons-material/Delete";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShopTwoIcon from '@mui/icons-material/ShopTwo';
 import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from "../../hooks/darkMode";
 import "../../layout/cart.css";
+import { ORIGIN } from "../../App";
 
-// TODO: Separate the logic and the styles
 export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCart = () => {} }) {
 
     const { cart } = useSelector((state) => state.cartReducer.user);
@@ -20,9 +22,11 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
     
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [ darkMode ] = useDarkMode();
     
-    const NEW_ORDER_URL = 'http://localhost:3000/orders/add';
-    const CART_URL_DELETE = 'http://localhost:3000/cart/delete';
+    const NEW_ORDER_URL = `${ORIGIN}/orders/add`;
+    const CART_URL_DELETE = `${ORIGIN}/cart/delete`;
 
     const [preview, setPreview] = useState(false);
     const [cartWidth, setCartWidth] = useState(370);
@@ -39,7 +43,6 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
         catch(error)
         {
             console.error('Failed To Delete From Cart', error.message);
-            
         }
     }
 
@@ -65,29 +68,40 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
 
     }
     
+    const StyledBadge = styled(Badge)(({ theme }) => ({
+        '& .MuiBadge-badge': {
+            top:  10,
+            transform: 'translateX(90%)', 
+            border: `2px solid ${theme.palette.background.paper}`,
+            padding: '0 4px',
+        },
+    }));
+      
     return (
         <Box sx={{ display: "flex" }}>
-            <IoIosCart
-                size={15}
+
+            <IconButton aria-label="cart"
                 onClick={handleMenuToggle}
-                style={{ 
-                    top: 36,
+                 style={{ 
+                    top: 40,
                     left: -2,
                     cursor: "pointer",
                     position: "fixed",
                     border: "2px solid #999999",
-                    borderBottomRightRadius: "5px",
-                    padding: "10px 15px",
+                    borderRadius: 5,
+                    padding: "10px 11px",
                 }}
-            />
+            >
+              <StyledBadge badgeContent={cart?.items?.length} color="info">
+                <ShoppingCartIcon sx={{color: darkMode ? 'white' : '#727272'}}/>
+              </StyledBadge>
+            </IconButton>
 
             <Drawer
                 anchor="left"
-                variant="persistent"
+                variant="temporary"
                 open={preview}
                 onClose={handleMenuToggle}
-                // disableRestoreFocus
-                // disableEnforceFocus
                 sx={{
                     width: cartWidth,
                     flexShrink: 0,
@@ -197,7 +211,6 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                             }}
                         >
                             Order
-                            {" "}
                             {cart?.total.toFixed(2)}
                             <ShopTwoIcon color="success" />
                         </IconButton>

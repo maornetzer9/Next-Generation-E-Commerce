@@ -1,42 +1,63 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button, Divider, Typography } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { loadProductsAction, modifyProductsAction } from "../../actions/productActions";
 import { FcAddRow } from "react-icons/fc";
-import Product from "./Product";  // Import the Product component
-import Loader from "../../UI/Loader";
 import { useDarkMode } from "../../hooks/darkMode";
 import { motion } from 'framer-motion';
 import { MdOutlineArrowCircleUp } from "react-icons/md";
 import { headContentAnimation } from "../../utils/motion";
-import '../../layout/admin-products.css';  // Import the CSS file
 import { useProductFilter } from "../../hooks/filterModel";
 import FilterModel from "../Filter-Model/FilterModel";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import EditIcon from "@mui/icons-material/Edit";
+import Product from "./Product";  // Import the Product component
+import Loader from "../../UI/Loader";
+import _ from 'lodash';
+import '../../layout/admin-products.css';  // Import the CSS file
+import { ORIGIN } from "../../App";
 
 export default function Products() {
 
-    const PRODUCTS_URL_LOAD = "http://localhost:3000/products";
-    const MODIFY_PRODUCT_URL = "http://localhost:3000/products/modify";
+    const PRODUCTS_URL_LOAD = `${ORIGIN}/products`;
+    const MODIFY_PRODUCT_URL = `${ORIGIN}/products/modify`;
 
     const { products = [] } = useSelector((state) => state.productsReducer);
 
+    const dispatch = useDispatch();
     const [ darkMode ] = useDarkMode();
+    const [isEditing, setIsEditing] = useState(false);
+    const [ editData, setEditData ] = useState({});
+
     const [ loading, setLoading ] = useState();
     
      const {
-        categories,
-        filteredProducts,
         categoriesAdmin,
+        filteredProducts,
         handlePriceChange,
         handleCategoryChange,
         handleSearchChange,
     } = useProductFilter(products);
 
-    const dispatch = useDispatch();
+    
+    const handleEditClick = useCallback((product) => {
+        setEditData(product);
+        setIsEditing(true);
+    }, []);    
 
     
-    
-    const scrollToTop= () => window.scrollTo({ top: 0, behavior: 'smooth'})
+    const modifyProducts = useCallback(async (product) => {
+        
+        if (_.isEqual(editData, product) && _.isEqual(editData.purchases, product.purchases)) 
+        {
+            return setIsEditing(false);
+        }
+
+        await dispatch(modifyProductsAction(editData, MODIFY_PRODUCT_URL));
+        setIsEditing(false);
+
+    }, [dispatch, editData]);
+
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -75,6 +96,8 @@ export default function Products() {
         await dispatch( modifyProductsAction( newProduct ,MODIFY_PRODUCT_URL ) );
     }
 
+    const scrollToTop= () => window.scrollTo({ top: 0, behavior: 'smooth'})
+
     if( loading ) return <Loader />
 
     return (
@@ -82,33 +105,63 @@ export default function Products() {
             {...headContentAnimation}
             className="products-container"
         >
-             <FilterModel
-                  categories={categoriesAdmin}
-                  onCategoryChange={handleCategoryChange}
-                  onPriceChange={handlePriceChange}
-                  onSearch={handleSearchChange}
-                />
             <Typography 
                 variant="h2"
                 className="product-header"
             >
                 Products
             </Typography>
-            <Divider sx={{bgcolor: darkMode ? 'white' : 'gray'}}/>
+
+             <FilterModel
+                  categories={categoriesAdmin}
+                  onCategoryChange={handleCategoryChange}
+                  onPriceChange={handlePriceChange}
+                  onSearch={handleSearchChange}
+                />
+           
+            <Divider sx={{bgcolor: darkMode ? 'white' : 'gray', mt: 5}}/>
 
             {filteredProducts.map((product, index) => {
                 return (
                     <Box 
                         key={index}
                         component={'div'}
+                        className="product-box"
                     >
-                        <Product product={product} />
+                        <Product 
+                            product={product} 
+                            isEditing={isEditing}
+                            setIsEditing={setIsEditing}
+                            editData={editData}
+                            setEditData={setEditData}
+                        />
+                    {isEditing ? (
+                        <Button
+                            variant="contained"
+                            color="success"
+                            endIcon={<SaveAltIcon />}
+                            onClick={ () => modifyProducts(product, index)}
+                            className="save-button"
+                        >
+                            Save
+                        </Button>
+                            ) : (
+                        <Button
+                            endIcon={<EditIcon />}
+                            variant="contained"
+                            onClick={ () => handleEditClick(product, index)}
+                            className="save-button"
+                        >
+                            Edit
+                        </Button>
+                    )}
+
                         <Divider sx={{bgcolor: darkMode ? 'white' : 'gray'}}/>
                     </Box>
                 )
             })}
             <Box 
-                component={'div'} 
+                component={'div'}
                 className="add-product-button-container"
             >
                 <Button

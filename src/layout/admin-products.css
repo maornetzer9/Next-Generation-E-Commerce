@@ -1,4 +1,9 @@
-/* Mobile-first base styles (default for all screen sizes) */
+.css-ktf5zp {
+    margin-left: 0 !important;
+    display: flex;
+    justify-content: center;
+}
+
 .products-container {
     border-radius: 20px;
     box-shadow: 1px 1px 2px 2px lightgray;
@@ -9,58 +14,36 @@
 }
 
 .product-box {
-    display: flex;
     flex-direction: column;
-    justify-content: space-between;
     border-radius: 20px;
-    /* box-shadow: 1px 1px 2px 1px gray; */
+    box-shadow: 1px 1px 2px 1px gray;
     padding: 15px;
-    margin-bottom: 20px;
+    margin-bottom: 50px !important;
     width: 100%;
     max-width: 1000px;
     margin: 20px auto;
     overflow: hidden;
-    gap: 20px;
 }
 
-/* Left side (Category and Description) */
 .product-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
     padding: 10px;
-    gap: 10px;
 }
 
-/* Right side (Price, Link to Pic, and Table) */
-.product-right {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
 
-/* Additional styles for elements inside the right side */
 .product-right-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     box-shadow: 1px 1px 5px 5px lightgray;
     border-radius: 20px;
     padding: 20px;
     margin: 20px 0;
 }
 
-/* Typography styles */
-.product-label {
-    font-weight: 700;
-    color: black;
-    font-size: 1rem;
-}
 
-/* Button styles */
 .save-button {
     outline: none !important;
     margin-top: 20px !important;
+    margin-bottom: 20px !important;
     font-weight: 700 !important;
     font-size: 1rem !important;
 }
@@ -76,7 +59,6 @@
     outline: none !important;
 }
 
-/* Link styles */
 .product-link {
     text-overflow: ellipsis;
     overflow: hidden;
@@ -86,25 +68,31 @@
     font-size: 0.9rem;
 }
 
-/* Header styles */
 .product-header {
     text-align: center;
+    height: 50px !important;
     font-size: 1.5rem;
     margin: 20px 0;
 }
 
-/* Media Queries */
+.table-container {
+    width: 96% !important;
+    max-height: 200px;
+    padding: 20px;
+    border-radius: 15px !important;
+}
 
-/* Small mobile devices (under 480px) */
 @media (max-width: 480px) {
 
     .products-container {
-        width: 35%;
-        padding: 10px 10px;
+        width: 80%;
+        margin: auto;
+        padding: 30px;
         float: left;
     
     }
     .product-box {
+        flex-direction: column;
         width: 90% ;
         padding: 10px;
         gap: 20px;
@@ -130,17 +118,29 @@
     }
 
     .product-header {
-        font-size: 1.2rem;
+        font-size: 1.2rem !important;
+        height: 100px;
+    }
+
+    .table-container {
+        width: 80% !important;
     }
 }
 
-/* Medium mobile devices (480px - 767px) */
 @media (min-width: 480px) and (max-width: 767px) {
-    .product-box {
-
-        padding: 15px;
-        gap: 20px;
+    .css-ktf5zp {
+        margin-left: 0 !important;
     }
+    
+    .products-container {
+        width: 90%;
+        margin: auto;
+        /* padding: 50px; */
+        padding-right: 50px;
+        float: left;
+    
+    }
+
 
     .product-right-content {
         padding: 20px;
@@ -152,7 +152,6 @@
     }
 
     .save-button {
-        margin-top: 15px !important;
         font-size: 1rem !important;
     }
 
@@ -161,24 +160,24 @@
     }
 
     .product-header {
-        font-size: 1.5rem;
+        font-size: 1.5rem !important;
+        height: 100px;
     }
 }
 
-/* Tablet devices (768px - 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-    .product-box {
-        flex-direction: row;
-        padding: 40px;
-        gap: 40px;
+    .css-ktf5zp {
+        width: 100% !important;
+        margin-left: 0 !important;
+
     }
 
-    .product-left {
-        padding: 20px;
-    }
-
-    .product-right {
-        width: 60%;
+    .products-container {
+        width: 70%;
+        margin: auto;
+        padding: 50px;
+        float: left;
+    
     }
 
     .product-right-content {
@@ -199,38 +198,32 @@
     }
 
     .product-header {
-        font-size: 2rem;
-        margin: 30px 0;
+        font-size: 2rem !important;
+        height: 100px;
     }
 }
 
-/* Desktop devices (1024px and up) */
-@media (min-width: 1024px) {
-    .product-box {
-        flex-direction: row;
-        padding: 70px;
-        gap: 80px;
+@media (min-width: 1024px)  and (max-width: 1223px) {
+    .css-ktf5zp {
+        margin-left: 0 !important;
     }
-
-    .product-left {
-        padding: 20px;
-    }
-
-    .product-right {
-        width: 60%;
-    }
-
-    .product-right-content {
-        padding: 30px;
-        margin: 30px;
+    .products-container {
+        padding: 50px;
+        margin: auto;
+        float: left;
     }
 
     .product-label {
         font-size: 1.5rem;
     }
 
+    .product-right-content {
+        margin-left: 25px;
+        margin-right: 45px;
+    }
+
+
     .save-button {
-        margin-top: 160px !important;
         font-size: 1.2rem !important;
     }
 
@@ -239,7 +232,7 @@
     }
 
     .product-header {
-        font-size: 2.5rem;
+        font-size: 2.5rem !important;
         height: 100px;
     }
 }

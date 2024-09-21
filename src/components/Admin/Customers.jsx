@@ -3,10 +3,11 @@ import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import TableModel from '../Table-Model/TableModel';
 import { loadUsersOrders } from '../../actions/orderActions';
+import { ORIGIN } from '../../App';
 
 export default function Customers() {
 
-    const LOAD_ADMIN_ORDERS_URL = 'http://localhost:3000/admin/customers';
+    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/customers`;
 
     const dispatch = useDispatch();
     

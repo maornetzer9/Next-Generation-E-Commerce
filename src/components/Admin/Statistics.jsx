@@ -6,11 +6,12 @@ import PieGraph from "./PieGraph";
 import QtyGraph from "./QtyGraph";
 import { motion } from 'framer-motion';
 import { headContentAnimation } from "../../utils/motion";
+import { ORIGIN } from "../../App";
 import "../../layout/statistics.css";
 
 export default function Statistics() {
 
-    const LOAD_ADMIN_ORDERS_URL = 'http://localhost:3000/admin/customers';
+    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/customers`;
     
     const dispatch = useDispatch();
     

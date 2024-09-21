@@ -5,12 +5,13 @@ import { deleteCategoriesAction, updateCategoriesAction } from "../../actions/pr
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import EditIcon from '@mui/icons-material/Edit';
+import { ORIGIN } from "../../App";
 import '../../layout/category.css';
 
 export default function Category({ category }) {
 
-    const UPDATE_CATEGORIES_URL = "http://localhost:3000/products/update";
-    const DELETE_CATEGORIES_URL = "http://localhost:3000/products/delete";
+    const UPDATE_CATEGORIES_URL = `${ORIGIN}/products/update`;
+    const DELETE_CATEGORIES_URL = `${ORIGIN}/products/delete`;
 
     const dispatch = useDispatch()
 

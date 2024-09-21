@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { REGISTRATION_FORM } from "../../utils/textFieldForms";
 import { customerUpdateAction } from "../../actions/userActions";
 import FormModel from "../Form-Model/FormModel";
+import { ORIGIN } from "../../App";
 
 export default function Account() {
     
@@ -10,7 +11,7 @@ export default function Account() {
   
   const dispatch = useDispatch();
 
-  const CUSTOMER_UPDATE_URL = "http://localhost:3000/customers/update";
+  const CUSTOMER_UPDATE_URL = `${ORIGIN}/customers/update`;
   
   const [edit, setEdit] = useState(false);
   const [form, setForm] = useState({ checked: false });

@@ -8,12 +8,13 @@ import Category from './Category';
 import Loader from '../../UI/Loader';
 import { headTextAnimation } from '../../utils/motion';
 import '../../layout/categories.css';
+import { ORIGIN } from '../../App';
 
 export default function Categories() {
     const { products } = useSelector((state) => state.productsReducer);
 
-    const PRODUCTS_URL_LOAD = "http://localhost:3000/products";
-    const CREATE_CATEGORIES_URL = "http://localhost:3000/products/create";
+    const PRODUCTS_URL_LOAD = `${ORIGIN}/products`;
+    const CREATE_CATEGORIES_URL = `${ORIGIN}/products/create`;
 
     const dispatch = useDispatch();
     const [darkMode] = useDarkMode();
@@ -74,9 +75,9 @@ export default function Categories() {
                     variant='h2'
                     className="categories_header"
                     sx={{
+                        fontWeight: 800,
                         padding: '20px 20px',
                         textAlign: 'center',
-                        fontWeight: 800,
                         color: darkMode ? "white" : 'black'
                     }}
                 >

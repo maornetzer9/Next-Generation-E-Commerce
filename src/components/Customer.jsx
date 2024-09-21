@@ -9,16 +9,17 @@ import ExitToAppRoundedIcon from '@mui/icons-material/ExitToAppRounded';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import FallingStars from '../UI/FallingStars';
 import { useDarkMode } from '../hooks/darkMode';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { pageTransition } from '../utils/motion';
 import { disconnectAction } from '../actions/userActions';
 import { useDispatch, useSelector } from 'react-redux';
+import { ORIGIN } from '../App';
 
-const Customer = React.forwardRef(() => {
+const Customer = React.forwardRef((props, ref) => {
 
     const { user } = useSelector((state) => state.userReducer);
     
-    const USER_DISCONNECT_URL = 'http://localhost:3000/customers/disconnect';
+    const USER_DISCONNECT_URL = `${ORIGIN}/customers/disconnect`;
     
     const dispatch = useDispatch();
     const [ darkMode, toggleDarkMode ] = useDarkMode();
@@ -171,9 +172,7 @@ return (
         }}
       >
 
-        <AnimatePresence mode='wait'>
             <Outlet />
-        </AnimatePresence>
         <Toolbar />
       </Box>
 

@@ -1,36 +1,14 @@
-import React, { memo, useCallback, useState } from "react";
-import { Box, Button, FormLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
-import SaveAltIcon from "@mui/icons-material/SaveAlt";
-import EditIcon from "@mui/icons-material/Edit";
+import React, { memo } from "react";
+import { Box, FormLabel, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { modifyProductsAction } from "../../actions/productActions";
 import { useDarkMode } from "../../hooks/darkMode";
-import _ from 'lodash'
+import { motion } from "framer-motion";
+import { headContentAnimation } from "../../utils/motion";
 
-function Product({ product }) {
-    const MODIFY_PRODUCT_URL = "http://localhost:3000/products/modify";
-    const [darkMode] = useDarkMode();
+function Product({ product = {}, isEditing  = false, setIsEditing = () => {}, editData = false, setEditData = () => {} }) {
 
-    const [isEditing, setIsEditing] = useState(false);
-    const [editData, setEditData] = useState(product);
+    const [ darkMode ] = useDarkMode();
 
-    const dispatch = useDispatch();
-
-    const handleEditClick = useCallback(() => {
-        setIsEditing(true);
-    }, []);    
-    const modifyProducts = useCallback(async () => {
-
-        if (_.isEqual(editData, product) && _.isEqual(editData.purchases, product.purchases)) 
-        {
-            return setIsEditing(false);
-        }
-
-        await dispatch(modifyProductsAction(editData, MODIFY_PRODUCT_URL));
-        setIsEditing(false);
-
-    }, [dispatch, editData, product]);
 
     const handleChange = ({ target: { name, value } }) => {
         setEditData((prevData) => ({
@@ -56,8 +34,7 @@ function Product({ product }) {
         : 'gray';
 
     return (
-        <Box component={"div"} className="product-box">
-            {/* Left Side: Category and Description */}
+        <Box component={"div"}>
             <Box component={"div"} className="product-left">
                 <FormLabel sx={{ color: labelColor, fontWeight: 700 }}>
                     Category:
@@ -106,30 +83,9 @@ function Product({ product }) {
                     </Typography>
                 )}
 
-                {isEditing ? (
-                    <Button
-                        variant="contained"
-                        color="success"
-                        endIcon={<SaveAltIcon />}
-                        onClick={modifyProducts}
-                        className="save-button"
-                    >
-                        Save
-                    </Button>
-                ) : (
-                    <Button
-                        endIcon={<EditIcon />}
-                        variant="contained"
-                        onClick={handleEditClick}
-                        className="save-button"
-                    >
-                        Edit
-                    </Button>
-                )}
-
+               
             </Box>
 
-            {/* Right Side: Price, Link to Pic, and Orders Table */}
             <Box component={"div"} className="product-right">
                 <Box component={"div"} className="product-right-content">
                     <Typography
@@ -163,6 +119,8 @@ function Product({ product }) {
                         src={product.thumbnail}
                         alt={product.title}
                         height={200}
+                        width={200}
+                        margin={'auto'}
                     />
 
                     <Typography
@@ -190,43 +148,40 @@ function Product({ product }) {
                             target="_blank"
                             className="product-link"
                             to={product.thumbnail}
-                            style={{ color: dataColor }}
+                            style={{ color: '#4c9cd4' }}
                         >
                             {product.thumbnail}
                         </Link>
                     )}
                 </Box>
-
-                {product.purchases.length > 0 && (
-                    <TableContainer
-                        component={Paper}
-                        sx={{
-                            boxShadow: "1px 1px 2px 1px black",
-                            borderRadius: "5px",
-                            marginTop: "20px",
-                            opacity: darkMode ? 0.7 : 1
-                        }}
-                    >
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell>Name</TableCell>
-                                    <TableCell>Quantity</TableCell>
-                                    <TableCell>Date</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {product.purchases.map((purchase, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{purchase?.name}</TableCell>
-                                        <TableCell>{purchase?.quantity}</TableCell>
-                                        <TableCell>{purchase?.createAt}</TableCell>
+                
+                <motion.div {...headContentAnimation}>
+                    {product.purchases.length > 0 && (
+                        <TableContainer
+                            component={Paper}
+                            className="table-container"
+                        >
+                            <Table>
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell>Name</TableCell>
+                                        <TableCell>Quantity</TableCell>
+                                        <TableCell>Date</TableCell>
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                )}
+                                </TableHead>
+                                <TableBody>
+                                    {product.purchases.map((purchase, index) => (
+                                        <TableRow key={index}>
+                                            <TableCell>{purchase?.name}</TableCell>
+                                            <TableCell>{purchase?.quantity}</TableCell>
+                                            <TableCell>{purchase?.createAt}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    )}
+                </motion.div>
             </Box>
         </Box>
     );

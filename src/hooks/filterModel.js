@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from "react";
 
-// Custom hook for filtering products
+// Custom Hook For Filtering Products
 export const useProductFilter = (products) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [priceRange, setPriceRange] = useState([0, 8]);

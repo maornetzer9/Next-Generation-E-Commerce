@@ -5,10 +5,11 @@ import { authAction } from '../actions/userActions';
 import { AnimatePresence, motion } from 'framer-motion'
 import { pageTransition } from '../utils/motion';
 import Loader from '../UI/Loader';
+import { ORIGIN } from '../App';
 
 const ProtectedRoute = ({ allowedRoles }) => {
 
-    const AUTH_URL = 'http://localhost:3000/customers/auth';
+    const AUTH_URL = `${ORIGIN}/customers/auth`;
 
     const user = JSON.parse(localStorage.getItem('user'));
     
@@ -32,9 +33,9 @@ const ProtectedRoute = ({ allowedRoles }) => {
             try 
             {
                 const response = await dispatch( authAction(token, AUTH_URL) );
-                const { isAuthenticated } = response;
+                const { isAuth } = response;
 
-                if (isAuthenticated) 
+                if (isAuth) 
                 {
                     setIsAuthenticated(true);
                 } 

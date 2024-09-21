@@ -18,15 +18,14 @@ export const USER_DISCONNECT = 'USER_DETAILS_UPDATE';
 export const USER_DISCONNECT_FAILURE = 'USER_DISCONNECT_FAILURE';
 
 
-
 export const authAction = ( token, url ) => async (dispatch) => {
     try
     {
         const response = await handleAuth( token, url );
 
-        const { code, message, isAuthenticated, user } = response;
+        const { code, message, isAuth, user } = response;
 
-        if(code !== 200 || !user || !isAuthenticated)
+        if(code !== 200 || !user || !isAuth)
         {
             dispatch({type: AUTH_FAILURE, payload: message });
             return response
@@ -35,7 +34,7 @@ export const authAction = ( token, url ) => async (dispatch) => {
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('token', JSON.stringify(user.token));
         dispatch({type: AUTH, payload: user});
-        return { code: 200, isAuthenticated, user };
+        return { code: 200, isAuth, user };
     }
     catch(err)
     {
