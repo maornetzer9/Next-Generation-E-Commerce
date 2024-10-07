@@ -1,54 +1,51 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, FormControl, FormLabel, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, FormControl, FormLabel, TextField, Typography } from '@mui/material';
 import { loginAction } from '../actions/userActions';
+import ErrorIcon from '@mui/icons-material/Error';
 import LoginIcon from '@mui/icons-material/Login';
 import { ORIGIN } from '../App';
-import '../layout/login.css';
+import '../css/login.css';
 
 
 export default function Login() {
 
   const LOGIN_URL = `${ORIGIN}/customers/login`
-  
-
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
   const [form, setForm] = useState({});
   
-  const error = useSelector((state) => state.error);
+  const error = useSelector((state) => state.userReducer.error);
   const handleForm = ({ target: { name, value } }) => setForm({ ...form, [name]: value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { username, password } = form;
-    if ( !username || !password ) return alert('Enter Username And Password');
-
-    const response = await dispatch( loginAction( username, password , LOGIN_URL) );
-    
-    const { code, message, role } = response;
-
-    if( code !== 200 ) return alert(message);
-    
-    if(role === "Admin")
+    try
     {
-        navigate('/admin');
+        const { username, password } = form;
+        if ( !username || !password ) return alert('Enter Username And Password');
+
+        const { role } = await dispatch( loginAction( username, password , LOGIN_URL) );
+                    
+        role === "Admin" ? navigate('/admin') : navigate('/customer');
     }
-    else
+    catch(err)
     {
-        navigate('/customer')
+        console.error('Failed to login:', err.message);
     }
   };
-
-  useEffect(() => { if (error !== undefined) return alert(error); }, [error])
+  
 
   return (
     <Box component={'div'}>
-      <FormControl component="form" id="login_form" onSubmit={handleSubmit}>
+      <FormControl 
+        component="form" 
+        id="login_form" 
+        onSubmit={handleSubmit}
+      >
       <Box component="div" id="login_inner_form">
         <Typography variant="h4" textAlign="center">
           Next Generation E-Commerce
@@ -81,6 +78,16 @@ export default function Login() {
           fullWidth
           required
         />
+
+        { error ? 
+            <Alert 
+                variant='standard'
+                severity="error"
+                icon={<ErrorIcon/>} 
+            >
+              {error}
+            </Alert>
+        : null }
 
         <Button
           endIcon={<LoginIcon/>}

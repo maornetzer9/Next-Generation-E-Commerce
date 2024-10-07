@@ -15,7 +15,7 @@
     width: 90%;
     height: 350px;
     max-width: 850px;
-    padding: 50px 30px;
+    padding: 60px 40px;
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -24,7 +24,6 @@
 }
 
 #login_inner_form > button {
-    margin-top: 50px;
     font-size: 20px;
     font-weight: 500;
 }

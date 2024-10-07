@@ -4,16 +4,16 @@ import { styled } from '@mui/material/styles';
 import { useDispatch, useSelector } from "react-redux";
 import { deleteFromCartAction } from "../../actions/cartActions";
 import { newOrderAction } from "../../actions/orderActions";
-import Add from "@mui/icons-material/Add";
-import Remove from "@mui/icons-material/Remove";
-import Delete from "@mui/icons-material/Delete";
+import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from "../../hooks/darkMode";
+import { ORIGIN } from "../../App";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShopTwoIcon from '@mui/icons-material/ShopTwo';
-import { useNavigate } from 'react-router-dom';
-import { useDarkMode } from "../../hooks/darkMode";
-import "../../layout/cart.css";
-import { ORIGIN } from "../../App";
+import Delete from "@mui/icons-material/Delete";
+import Remove from "@mui/icons-material/Remove";
+import Add from "@mui/icons-material/Add";
+import "../../css/cart.css";
 
 export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCart = () => {} }) {
 
@@ -65,7 +65,6 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
         {
             console.error('Failed To Handle New Order', error.message);
         }
-
     }
     
     const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -92,7 +91,7 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                     padding: "10px 11px",
                 }}
             >
-              <StyledBadge badgeContent={cart?.items?.length} color="info">
+              <StyledBadge badgeContent={cart?.items?.length} color="primary">
                 <ShoppingCartIcon sx={{color: darkMode ? 'white' : '#727272'}}/>
               </StyledBadge>
             </IconButton>
@@ -132,7 +131,6 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                             left: cartWidth === 370 ? '370px' : 'calc(100% - 43px)', 
                             boxShadow: "1px 1px 2px 2px #999999 ",
                             borderTopLeftRadius: "1px",
-                            // borderBottomLeftRadius: "1px",
                             background: 'white',
                             zIndex: 1000,
                             transform: isFlipped ? "scaleX(-1)" : "scaleX(1)", 
@@ -201,11 +199,10 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                                 margin:'auto',
                                 marginTop:'10%',
                                 marginBottom:'5%',
-                                background: '', 
                                 color: 'green',
                                 ":hover" : {
-                                    background:'#82e6a8',
                                     color: '#f2f2f2',
+                                    background:'#82e6a8',
                                     transition: '1s ease'
                                 }
                             }}
@@ -221,7 +218,6 @@ export default function Cart({ user = {}, addToTheCart = () => {}, removeFromCar
                 component="main"
                 sx={{
                     flexGrow: 1,
-                    p: 3,
                     marginLeft: preview ? `${cartWidth}px` : "0", 
                     transition: "margin-left 0.5s ease",
                 }}

@@ -4,7 +4,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { Box, Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useDarkMode } from '../../hooks/darkMode';
-import '../../layout/qty-graph.css';
+import '../../css/qty-graph.css';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -67,9 +67,9 @@ export default function QtyGraph() {
             id='qty_form' 
             component={'div'}
             sx={{
-                color: darkMode ? 'white' : '',
+                color: darkMode ? 'gray' : '',
                 bgcolor: darkMode ? 'transparent' : 'transparent',
-                boxShadow: darkMode ? '1px 1px 2px 1px white' : '1px 1px 2px black',
+                boxShadow: darkMode ? '1px 1px 1px 1px gray' : '1px 1px 2px black',
             }}
         >
             <Typography 
@@ -83,7 +83,7 @@ export default function QtyGraph() {
                 Products Quantity Per Customer
             </Typography>
 
-            <Divider sx={{width:"100%", bgcolor: darkMode ? 'white' : 'gray'}} style={{marginBottom: 50}} />
+            <Divider sx={{width:"100%", bgcolor: darkMode ? 'gray' : 'gray'}} style={{marginBottom: 50}} />
 
             <Bar style={{marginTop: '20%'}} data={data} options={options} />
         </Box>

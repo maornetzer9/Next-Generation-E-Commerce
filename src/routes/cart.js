@@ -8,7 +8,7 @@ export const handleLoadCart = async ( userId, CART_URL_LOAD ) => {
     }
     catch(err)
     {
-        console.error(' Failed to load cart: ', err.message);
+        console.error(' Failed to load cart:', err.message);
         throw new Error(' Failed to load cart ');        
     }
 };

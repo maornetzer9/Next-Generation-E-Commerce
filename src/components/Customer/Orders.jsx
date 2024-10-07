@@ -28,10 +28,11 @@ export default function Orders() {
     }, [ dispatch, user._id ])
     
     return (
-        <motion.div {...headTextAnimation} >
+        <motion.div {...headTextAnimation} style={{marginTop:50}} >
             <Typography 
                 variant="h1"
-                height={150}
+                height={50}
+                sx={{fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }}}
             >
                 Orders
             </Typography>

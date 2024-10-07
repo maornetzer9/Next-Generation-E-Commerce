@@ -6,7 +6,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import EditIcon from '@mui/icons-material/Edit';
 import { ORIGIN } from "../../App";
-import '../../layout/category.css';
+import '../../css/category.css';
 
 export default function Category({ category }) {
 

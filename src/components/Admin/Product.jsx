@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useDarkMode } from "../../hooks/darkMode";
 import { motion } from "framer-motion";
 import { headContentAnimation } from "../../utils/motion";
+import '../../css/admin-product.css'
 
 function Product({ product = {}, isEditing  = false, setIsEditing = () => {}, editData = false, setEditData = () => {} }) {
 

@@ -1,33 +1,35 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import debounce from "lodash.debounce";
 
 export const useDarkMode = () => {
-    const [darkMode, setDarkMode] = useState(() => {
+    const [ darkMode, setDarkMode ] = useState(() => {
         const savedState = localStorage.getItem('darkMode');
         return savedState ? JSON.parse(savedState) : false;
     });
 
-    // Update local state and save to localStorage
-    const toggleDarkMode = () => {
-        setDarkMode(prevState => {
-            const newState = !prevState;
-            localStorage.setItem('darkMode', JSON.stringify(newState));
-            // Dispatch custom event to notify other components
-            window.dispatchEvent(new Event('darkModeChanged'));
-            return newState;
-        });
-    };
+    const toggleDarkMode = useCallback(
+        debounce(() => {
+            setDarkMode(prevState => {
+                const newState = !prevState;
+                localStorage.setItem('darkMode', JSON.stringify(newState));
+                window.dispatchEvent(new Event('darkModeChanged'));
+                return newState;
+            });
+        }, 200), // Debounce for 200ms to avoid rapid changes
+        []
+    );
 
-    // Listen for changes to darkMode in other tabs/windows or by other components
     useEffect(() => {
         const syncDarkMode = () => {
             const savedState = localStorage.getItem('darkMode');
-            if (savedState !== null) {
+            if (savedState !== null) 
+            {
                 setDarkMode(JSON.parse(savedState));
             }
         };
 
-        window.addEventListener('storage', syncDarkMode); // Listen for storage changes
-        window.addEventListener('darkModeChanged', syncDarkMode); // Listen for custom event
+        window.addEventListener('storage', syncDarkMode);
+        window.addEventListener('darkModeChanged', syncDarkMode);
 
         return () => {
             window.removeEventListener('storage', syncDarkMode);

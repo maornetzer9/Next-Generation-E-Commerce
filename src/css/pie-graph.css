@@ -8,13 +8,19 @@
     padding: 50px ;
 }
 
+
+@media (max-width: 768px) {
+    #pie_form{
+        width: 65%;
+    }
+
+}
+
+
 @media (max-width: 480px) {
     #pie_form {
-        width: 70%;
+        /* width: 70% !important; */
         padding: 50px;
     }
 
-    .pie_container {
-        width: 80% !important;
-    }
 }

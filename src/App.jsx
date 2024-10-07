@@ -5,8 +5,8 @@ import Login from './components/Login';
 import Register from './components/Register';
 import Admin from './components/Admin';
 import ProtectedRoute from './components/ProtectedRoute';
-import { AnimatePresence } from 'framer-motion';
 import Customer from './components/Customer';
+import { AnimatePresence } from 'framer-motion';
 
 export const ORIGIN = import.meta.env.VITE_ORIGIN;
 

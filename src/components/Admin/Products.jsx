@@ -14,7 +14,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import Product from "./Product";  // Import the Product component
 import Loader from "../../UI/Loader";
 import _ from 'lodash';
-import '../../layout/admin-products.css';  // Import the CSS file
+import '../../css/admin-products.css';  // Import the CSS file
 import { ORIGIN } from "../../App";
 
 export default function Products() {
@@ -28,8 +28,8 @@ export default function Products() {
     const [ darkMode ] = useDarkMode();
     const [isEditing, setIsEditing] = useState(false);
     const [ editData, setEditData ] = useState({});
-
     const [ loading, setLoading ] = useState();
+    const [ error, setError ] = useState();
     
      const {
         categoriesAdmin,
@@ -47,7 +47,8 @@ export default function Products() {
 
     
     const modifyProducts = useCallback(async (product) => {
-        
+    try
+    { 
         if (_.isEqual(editData, product) && _.isEqual(editData.purchases, product.purchases)) 
         {
             return setIsEditing(false);
@@ -55,6 +56,11 @@ export default function Products() {
 
         await dispatch(modifyProductsAction(editData, MODIFY_PRODUCT_URL));
         setIsEditing(false);
+    }
+    catch(error)
+    {
+        console.error('Failed to modify product.', err.message);
+    }
 
     }, [dispatch, editData]);
 

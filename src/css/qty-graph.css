@@ -14,18 +14,14 @@
 
 @media (max-width: 768px) {
     #qty_form {
-        width: 97%;
-        border-radius: 10px;
+        width: 90%;
     }
 
-    .qtyGraph_header {
-        font-size: 1.5rem;
-        margin-bottom: 10px;
-    }
 }
 
 @media (max-width: 480px) {
     #qty_form {
+        width: 90%;
         padding: 10px;
         box-sizing: content-box;
     }

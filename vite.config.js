@@ -6,6 +6,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     minify: 'esbuild', // Use esbuild for faster minification
-    chunkSizeWarningLimit: 512, // Adjust this as needed
+    chunkSizeWarningLimit: 512, 
   },
 })

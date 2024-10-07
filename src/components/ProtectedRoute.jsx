@@ -1,54 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { authAction } from '../actions/userActions';
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion';
 import { pageTransition } from '../utils/motion';
 import Loader from '../UI/Loader';
 import { ORIGIN } from '../App';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-
     const AUTH_URL = `${ORIGIN}/customers/auth`;
-
     const user = JSON.parse(localStorage.getItem('user'));
-    
 
-    const { role, token } = user;
+    // Using optional chaining to safely access the token
+    const token = user?.token;
 
     const dispatch = useDispatch();
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [isAuthorize, setIsAuthorize] = useState(false);
 
     useEffect(() => {
-
-        if (!user || !token) 
+        // Check for the token immediately
+        if (!token) 
         {
             setLoading(false);
-            setIsAuthenticated(false);
+            setIsAuthorize(false);
             return;
         }
-
+        
         const handleAuthentication = async () => {
             try 
             {
-                const response = await dispatch( authAction(token, AUTH_URL) );
-                const { isAuth } = response;
+                const { isAuth, user } = await dispatch(authAction(token, AUTH_URL));
 
-                if (isAuth) 
+                // Check valid auth and role 
+                if (isAuth && allowedRoles.includes(user.role)) 
                 {
-                    setIsAuthenticated(true);
+                    setIsAuthorize(true);
                 } 
                 else 
                 {
-                    alert('Authentication failed');
-                    setIsAuthenticated(false);
+                    setIsAuthorize(false);
                 }
             } 
             catch(error) 
             {
                 console.error('Authentication failed:', error);
-                setIsAuthenticated(false);
+                setIsAuthorize(false);
             } 
             finally 
             {
@@ -57,26 +54,24 @@ const ProtectedRoute = ({ allowedRoles }) => {
         };
 
         handleAuthentication();
-    }, [token]);
+    }, [token, dispatch, allowedRoles]);
 
     if (loading) return <Loader />;
 
-    return (
+    // Redirect to login page if the user not authorize.
+    return isAuthorize ? 
         <AnimatePresence mode="wait">
-          {isAuthenticated && allowedRoles.includes(role) ? (
             <motion.div
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              variants={pageTransition}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={pageTransition}
             >
-              <Outlet />
+                <Outlet />
             </motion.div>
-          ) : (
-            <Navigate to="/" />
-          )}
         </AnimatePresence>
-      );
-    };
+    : <Navigate to="/" /> 
+    
+};
 
 export default ProtectedRoute;

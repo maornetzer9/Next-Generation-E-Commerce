@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Box, Divider, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { useDarkMode } from '../../hooks/darkMode';
-import '../../layout/pie-graph.css';
+import '../../css/pie-graph.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -75,7 +75,7 @@ export default function PieGraph() {
                 },
             },
         },
-        layout: {
+        css: {
             padding: {
                 top: 10,
                 bottom: 50,
@@ -100,7 +100,7 @@ export default function PieGraph() {
             sx={{
                 color: darkMode ? 'white' : '',
                 bgcolor: darkMode ? 'transparent' : 'transparent',
-                boxShadow: darkMode ? '1px 1px 2px 1px white' : '1px 1px 2px black',
+                boxShadow: darkMode ? '1px 1px 1px 1px gray' : '1px 1px 2px black',
                 padding: { xs: '15px', sm: '20px', md: '30px' }, 
             }}
         > 
@@ -116,7 +116,7 @@ export default function PieGraph() {
                 Total Sold Products
             </Typography>
 
-            <Divider sx={{ width: "100%", bgcolor: darkMode ? 'white' : 'gray', marginBottom: '20px' }} />
+            <Divider sx={{ width: "100%", bgcolor: darkMode ? 'gray' : 'gray', marginBottom: '20px' }} />
             
             <Box 
                 component={'div'}

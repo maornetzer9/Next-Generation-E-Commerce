@@ -13,8 +13,9 @@ export default function Account() {
 
   const CUSTOMER_UPDATE_URL = `${ORIGIN}/customers/update`;
   
-  const [edit, setEdit] = useState(false);
-  const [form, setForm] = useState({ checked: false });
+  const [ error, setError ] = useState('');
+  const [ edit, setEdit ] = useState(false);
+  const [ form, setForm ] = useState({ checked: false });
 
   // Initialize form state with default values
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function Account() {
     }
   }, [user]);
 
-  const handleEditMode = () => setEdit((prevState) => !prevState); 
+  const handleEditMode = () => setEdit((prevState) => !prevState) || setError(''); 
 
   
   const handleFormChange = ({ target }) => {
@@ -69,9 +70,10 @@ export default function Account() {
       formValues={form}
       showIcon={true}
       editMode={true}
+      error={error}
       handleEditMode={handleEditMode}
       handleFormChange={handleFormChange}
-      handleSubmit={ (e) => edit ? handleSubmit(e) : alert('You need to be on edit mode')}
+      handleSubmit={ (e) => edit ? handleSubmit(e) : setError('You need to be on edit mode.')}
       checkboxLabel="Allow others to see my orders"
       checkboxName="checked"
       checkboxChecked={form.checked}

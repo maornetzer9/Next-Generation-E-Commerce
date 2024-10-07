@@ -52,8 +52,8 @@ export const addToCartAction = ( userId, product, url ) => async (dispatch) => {
             return { code, message };
         }
         
-        dispatch({ type: ADD_TO_CART, payload: { newProduct, total } });
-        return { code };
+        dispatch({ type: ADD_TO_CART, payload: { newProduct, total, message } });
+        return { code, message };
     }
     catch(error)
     {

@@ -1,48 +1,44 @@
 import React from "react";
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Divider } from "@mui/material";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Box, Typography, Divider, useTheme } from "@mui/material";
 import { headContentAnimation, headTextAnimation } from "../../utils/motion";
 import { useSelector } from "react-redux";
-import { useDarkMode } from "../../hooks/darkMode";
 import { motion } from "framer-motion";
 import './table-model.css';
 
-function TableModel({
-    label,
-    labelTwo,
-    labelThree,
-    labelFour,
-    adminTable,
-    cellHeight,
-    tableWidth = "100%",
-}) {
+function TableModel({ label, labelTwo, labelThree, labelFour, adminTable, tableWidth = "100%" }) {
     const { user, users } = useSelector((state) => state.ordersReducer);
-
-    const [darkMode] = useDarkMode();
-
     const usersWithOrders = users.filter((user) => user.orders.length > 0);
+    const theme = useTheme(); // Access the current theme
+
+    // Use theme.palette.mode to determine dark or light mode
+    const isDarkMode = theme.palette.mode === 'dark';
 
     const renderCustomerTableRow = (order, index) => (
-        <TableRow key={index} >
+        <TableRow key={index}>
             <TableCell 
-                className="tableCell" 
                 sx={{ 
                     display: "flex", 
                     flexDirection: "column", 
                     alignItems: "center", 
+                    padding: { xs: '5px', sm: '8px', md: '12px' },
                 }}>
                 <Box 
-                    className="tableImageProduct"
                     component="img"
                     alt={order.title} 
                     src={order.thumbnail} 
-                    height={100} 
-                    width={100} 
+                    height={{ xs: 70, sm: 100 }} 
+                    width={{ xs: 70, sm: 100 }} 
                 />
-                {order.title}
+                <Typography 
+                    variant="body2" 
+                    sx={{ fontSize: { xs: '12px', sm: '14px', md: '16px' } }}
+                >
+                    {order.title}
+                </Typography>
             </TableCell>
-            <TableCell className="tableCell"> {order.quantity} </TableCell>
-            <TableCell className="tableCell"> {`$${order.total.toFixed(2)}`} </TableCell>
-            <TableCell className="tableCell"> {order.createAt} </TableCell>
+            <TableCell sx={{ fontSize: { xs: '12px', sm: '14px' } }}>{order.quantity}</TableCell>
+            <TableCell sx={{ fontSize: { xs: '12px', sm: '14px' } }}>{`$${order.total.toFixed(2)}`}</TableCell>
+            <TableCell sx={{ fontSize: { xs: '12px', sm: '14px' } }}>{order.createAt}</TableCell>
         </TableRow>
     );
 
@@ -51,68 +47,71 @@ function TableModel({
             <React.Fragment key={index}>
                 <TableRow>
                     <TableCell 
-                        className="tableCell" 
-                        style={{ height: cellHeight }}
                         sx={{
-                            color: darkMode ? 'white' : 'black',
+                            color: isDarkMode ? 'white' : 'black',
                             fontSize: { xs: '12px', sm: '14px', md: '16px' },
                             padding: { xs: '8px', sm: '10px', md: '12px' },
+                            textAlign:'center'
                         }}
                     >
                         {user.firstName} {user.lastName}
                     </TableCell>
                     <TableCell 
-                        className="tableCell"
                         sx={{
-                            color: darkMode ? 'white' : 'black',
+                            color: isDarkMode ? 'white' : 'black',
                             fontSize: { xs: '12px', sm: '14px', md: '16px' },
                             padding: { xs: '8px', sm: '10px', md: '12px' },
                         }}
                     >
                         {user.createAt}
                     </TableCell>
-                    <TableCell className="tableCell">
-                        <TableContainer component={Paper} className="smallTableContainer" sx={{ bgcolor: darkMode ? 'transparent' : 'white'}}>
-                            <Table>
+                    <TableCell>
+                        <TableContainer 
+                            component={Paper} 
+                            sx={{ 
+                                bgcolor: isDarkMode ? 'transparent' : 'white', 
+                                maxWidth: '100%', 
+                                overflow: 'auto', 
+                                height:'260px',
+                                boxShadow:'1px 1px 2px 1px gray'
+                            }}>
+                            <Table size="small">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell 
                                             sx={{
-                                                color: darkMode ? 'white' : 'black',
+                                                color: isDarkMode ? 'white' : 'black',
                                                 fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 padding: { xs: '6px', sm: '8px', md: '10px' },
+                                                textAlign:'center'
                                             }} 
-                                            className="smallTableHead"
                                         >
                                             Product
                                         </TableCell>
                                         <TableCell 
                                             sx={{
-                                                color: darkMode ? 'white' : 'black',
+                                                color: isDarkMode ? 'white' : 'black',
                                                 fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 padding: { xs: '6px', sm: '8px', md: '10px' },
                                             }} 
-                                            className="smallTableHead"
                                         >
                                             Quantity
                                         </TableCell>
                                         <TableCell 
                                             sx={{
-                                                color: darkMode ? 'white' : 'black',
+                                                color: isDarkMode ? 'white' : 'black',
                                                 fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 padding: { xs: '6px', sm: '8px', md: '10px' },
                                             }} 
-                                            className="smallTableHead"
                                         >
                                             Date
                                         </TableCell>
                                         <TableCell 
                                             sx={{
-                                                color: darkMode ? 'white' : 'black',
+                                                color: isDarkMode ? 'white' : 'black',
                                                 fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 padding: { xs: '6px', sm: '8px', md: '10px' },
                                             }} 
-                                            className="smallTableHead"
                                         >
                                             Status
                                         </TableCell>
@@ -121,19 +120,19 @@ function TableModel({
                                 <TableBody>
                                     {user.orders.map((order, index) => (
                                         <TableRow key={index}>
-                                            <TableCell className="tableCell" >
+                                            <TableCell sx={{overflow: 'hidden', textAlign:'center'}} >
                                                 <Box 
                                                     component="img" 
                                                     alt={order.title} 
                                                     src={order.thumbnail} 
-                                                    height={70} 
-                                                    width={70} 
+                                                    height={{ xs: 50, sm: 70 }} 
+                                                    width={{ xs: 50, sm: 70 }} 
                                                 />
                                                 <Typography 
                                                     variant="body2" 
                                                     fontWeight={600}
                                                     sx={{
-                                                        color: darkMode ? 'white' : 'black',
+                                                        color: isDarkMode ? 'white' : 'black',
                                                         fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                     }}
                                                 >
@@ -142,28 +141,26 @@ function TableModel({
                                             </TableCell>
                                             <TableCell 
                                                 sx={{
-                                                    color: darkMode ? 'white' : 'black',
+                                                    color: isDarkMode ? 'white' : 'black',
                                                     fontSize: { xs: '10px', sm: '12px', md: '14px' },
+                                                    padding: { xs: 2.5, sm: 3, md:4 },
                                                 }} 
-                                                className="smallTableCell"
                                             >
                                                 {order.quantity}
                                             </TableCell>
                                             <TableCell 
                                                 sx={{
-                                                    color: darkMode ? 'white' : 'black',
+                                                    color: isDarkMode ? 'white' : 'black',
                                                     fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 }} 
-                                                className="tableCell"
                                             >
                                                 {order.joinedAt}
                                             </TableCell>
                                             <TableCell 
                                                 sx={{
-                                                    color: darkMode ? 'white' : 'black',
+                                                    color: isDarkMode ? 'white' : 'black',
                                                     fontSize: { xs: '10px', sm: '12px', md: '14px' },
                                                 }} 
-                                                className="tableCell"
                                             >
                                                 {order?.status}
                                             </TableCell>
@@ -179,17 +176,23 @@ function TableModel({
     );
 
     const renderUserOrdersTable = (user) => (
-        <Box key={user._id} sx={{ mt: 4 }} className='user_table_container' >
+        <Box key={user._id} sx={{ mt: 4 }}>
             <Typography variant="h6">Orders for {user.firstName} {user.lastName}</Typography>
             <Divider sx={{ mb: 2 }} />
-            <TableContainer component={Paper} className="userOrdersTableContainer">
+            <TableContainer 
+                component={Paper} 
+                sx={{ 
+                    maxWidth: '100%', 
+                    overflowX: 'auto', 
+                    height:'500px'
+                }}>
                 <Table aria-label="user orders table">
-                    <TableHead className="tableHeader">
+                    <TableHead >
                         <TableRow>
-                            <TableCell className="tableCell">{label}</TableCell>
-                            <TableCell className="tableCell">{labelTwo}</TableCell>
-                            <TableCell className="tableCell">{labelThree}</TableCell>
-                            <TableCell className="tableCell">{labelFour}</TableCell>
+                            <TableCell sx={{textAlign:'center'}}>{label}</TableCell>
+                            <TableCell>{labelTwo}</TableCell>
+                            <TableCell>{labelThree}</TableCell>
+                            <TableCell>{labelFour}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -199,21 +202,21 @@ function TableModel({
             </TableContainer>
         </Box>
     );
-    
+
     return (
-        <motion.div 
-            { ...headContentAnimation }
-            style={{ width: tableWidth }} 
-        >
+        <motion.div {...headContentAnimation} style={{ width: tableWidth, marginTop:100}}>
             {user?.orders.length > 0 && !adminTable && (
-                <TableContainer component={Paper} className="tableContainer">
+                <TableContainer 
+                    component={Paper} 
+                    sx={{ maxWidth: '100%', overflowX: 'auto', height:'500px' }}
+                >
                     <Table aria-label="simple table">
-                        <TableHead className="tableHeader" >
+                        <TableHead>
                             <TableRow>
-                                <TableCell className="tableCell"> {label} </TableCell>
-                                <TableCell className="tableCell"> {labelTwo} </TableCell>
-                                <TableCell className="tableCell"> {labelThree} </TableCell>
-                                <TableCell className="tableCell"> {labelFour} </TableCell>
+                                <TableCell sx={{textAlign:'center'}}>{label}</TableCell>
+                                <TableCell>{labelTwo}</TableCell>
+                                <TableCell>{labelThree}</TableCell>
+                                <TableCell>{labelFour}</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -224,46 +227,43 @@ function TableModel({
             )}
 
             {adminTable && (
-                <motion.div 
-                    drag={ darkMode ? true : false } 
-                    {...headTextAnimation} 
-                >
+                <motion.div drag={isDarkMode ? true : false} {...headTextAnimation}>
                     <Typography 
                         variant="h1" 
-                        height={150}
-                        sx={{
-                            textAlign: 'center',
-                            fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
-                            marginBottom: { xs: '10px', sm: '20px', md: '30px' },
-                        }}
+                        height={80}
+                        sx={{ fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' } }}
                     >
                         Orders
                     </Typography>
-                    { usersWithOrders.length > 0 ? 
+                    {usersWithOrders.length > 0 ? (
                         <TableContainer 
                             component={Paper} 
-                            id="tableContainerAdmin"
-                            className="tableContainer" 
-                            sx={{ bgcolor: darkMode ? 'transparent' : 'white' }}
+                            sx={{ 
+                                bgcolor: isDarkMode ? 'transparent' : 'white', 
+                                boxShadow: isDarkMode ? '1px 1px 2px 1px white' : '1px 1px 2px 1px gray', 
+                                maxWidth: '100%', 
+                                overflowX: 'auto',
+                                ml: '10px'
+                             }}
                         >
                             <Table aria-label="simple table">
-                                <TableHead className="tableHeader">
+                                <TableHead>
                                     <TableRow>
-                                        <TableCell className="tableCell"> Full Name </TableCell>
-                                        <TableCell className="tableCell"> Joined At </TableCell>
-                                        <TableCell className="tableCell"> Products </TableCell>
+                                        <TableCell sx={{color: isDarkMode ? 'white' : 'black', textAlign:'center'}}>Full Name</TableCell>
+                                        <TableCell sx={{color: isDarkMode ? 'white' : 'black', textAlign:'center'}}>Joined At</TableCell>
+                                        <TableCell sx={{color: isDarkMode ? 'white' : 'black', textAlign:'center'}}>Products</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    { renderAdminTableRow() }
+                                    {renderAdminTableRow()}
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                    : null }
+                    ) : null}
                 </motion.div>
             )}
 
-            {!adminTable && usersWithOrders.map(renderUserOrdersTable) }
+            {!adminTable && usersWithOrders.map(renderUserOrdersTable)}
         </motion.div>
     );
 }

@@ -1,14 +1,15 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { Alert, Box, Button, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCategoryAction, loadProductsAction } from '../../actions/productActions';
 import { useDarkMode } from '../../hooks/darkMode';
+import { headTextAnimation } from '../../utils/motion';
 import { motion } from 'framer-motion';
+import { ORIGIN } from '../../App';
+import ErrorIcon from '@mui/icons-material/Error';
 import Category from './Category';
 import Loader from '../../UI/Loader';
-import { headTextAnimation } from '../../utils/motion';
-import '../../layout/categories.css';
-import { ORIGIN } from '../../App';
+import '../../css/categories.css';
 
 export default function Categories() {
     const { products } = useSelector((state) => state.productsReducer);
@@ -18,19 +19,20 @@ export default function Categories() {
 
     const dispatch = useDispatch();
     const [darkMode] = useDarkMode();
+    const [ error, setError ] = useState('');
     const [newCategory, setNewCategory] = useState('');
 
     // Memoize the categories array to avoid recalculating it on every render
     const categoriesProduct = useMemo(() => [...new Set(products.map((product) => product.category))], [products]);
 
     // Memoize the onChange handler to avoid unnecessary re-renders
-    const handleOnChange = useCallback(({ target: { value } }) => setNewCategory(value), []);
+    const handleOnChange = useCallback(({ target: { value } }) => setNewCategory(value) || setError(''), []);
 
     // Memoize the create category handler to avoid unnecessary re-renders
     const handleCreateCategory = useCallback(async () => {
         try 
         {
-            if (newCategory === "") return alert('Please Add Category Name');
+            if (newCategory === "") return setError('Please Add Category Name');
             await dispatch( createCategoryAction( newCategory, CREATE_CATEGORIES_URL ) );
             setNewCategory(''); // Clear the input after category creation
         } 
@@ -86,10 +88,22 @@ export default function Categories() {
 
                 { categoriesProduct.map((category, index) => <Category key={index} category={category} />) }
 
+                { error ? 
+                    <Alert 
+                        variant='standard'
+                        severity="error"
+                        icon={<ErrorIcon/>} 
+                    >
+                      {error}
+                    </Alert>
+                : null }
+
                 <Box
                     component={'div'}
                     className='new_category'
                 >
+                  
+
                     <TextField value={newCategory} onChange={handleOnChange}
                         sx={{
                             width: '80%',

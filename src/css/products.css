@@ -40,20 +40,17 @@
 
 @media (max-width: 768px) {
     .products_form {
-        width: 95%; 
-        padding: 15px;
+        width: 85%; 
     }
 
     .products_inner_form {
         width: 90%; 
-        padding: 15px;
     }
 }
 
 @media (max-width: 480px) {
     .products_form {
-        width: 95%; 
-        float: left;
+        width: 85%; 
         padding: 10px;
     }
 

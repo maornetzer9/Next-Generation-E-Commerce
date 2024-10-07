@@ -11,6 +11,7 @@ export const handleAuth = async ( token, url ) => {
         const { data } = await axios.get(url, {
           headers: { Authorization: `Bearer ${token}` },
         });
+        
         return data
     }
     catch(err)
@@ -20,7 +21,7 @@ export const handleAuth = async ( token, url ) => {
     }
 };
 
-export const handleLogin = async (username, password, url) => {
+export const handleLogin = async ( username, password, url) => {
     const { data } = await axios.post( url, { username, password } );
     return data;
 }

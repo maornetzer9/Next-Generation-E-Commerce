@@ -1,5 +1,5 @@
 import React from 'react';
-import '../layout/loader.css'
+import '../css/loader.css'
 import { useDarkMode } from '../hooks/darkMode';
 
 export default function Loader() {

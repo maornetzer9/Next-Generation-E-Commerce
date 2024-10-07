@@ -22,13 +22,13 @@ export const authAction = ( token, url ) => async (dispatch) => {
     try
     {
         const response = await handleAuth( token, url );
-
         const { code, message, isAuth, user } = response;
 
         if(code !== 200 || !user || !isAuth)
         {
+            localStorage.clear();
             dispatch({type: AUTH_FAILURE, payload: message });
-            return response
+            return { code, message };
         }
 
         localStorage.setItem('user', JSON.stringify(user));
@@ -48,17 +48,18 @@ export const loginAction = (username, password, url) => async (dispatch) => {
     {
         const response = await handleLogin(username, password, url);
         const { code, message, user } = response;
-
+        
         if (code !== 200 || !user ) 
         {
+            localStorage.clear();
             dispatch({ type: LOGIN_FAILURE, payload: message });
-            return response;
+            return { code, message };
         }
-        
         const { role, token } = user;
+
         localStorage.setItem('user', JSON.stringify({ role, token }));
         dispatch({ type: LOGIN, payload: user });
-        return { code: 200, role };
+        return { code: 200, user, role };
     } 
     catch(error) 
     {
@@ -76,11 +77,11 @@ export const registerAction = (user, url) => async (dispatch) => {
         if (response.code !== 200) 
         {
             dispatch({ type: REGISTER_FAILURE, payload: message });
-            return response;
+            return { code, message };
         }
 
         dispatch({ type: REGISTER, payload: user });
-        return response;
+        return { code, message };
     } 
     catch(err) 
     {
@@ -123,7 +124,7 @@ export const disconnectAction = ( token, url ) => async (dispatch) => {
             return { code, message };
         }
 
-        localStorage.removeItem('token', token)
+        localStorage.clear()
         dispatch({ type: USER_DISCONNECT, payload: message });
         return { code, message };
     }

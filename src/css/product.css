@@ -28,9 +28,9 @@
     gap: 20px;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px)   {
     .product_content {
-        width: 70%; /* Slightly larger content width on tablets */
+        width: 70%; 
         margin: auto;
     }
 
@@ -40,7 +40,7 @@
     }
 
     .product_amount_form {
-        flex-direction: column; /* Stack items vertically on smaller screens */
+        flex-direction: column; 
         gap: 15px;
     }
 }
@@ -72,13 +72,13 @@
 
 @media (max-width: 480px) {
     .product_content {
-        width: 100%; 
+        width: 90%; 
         margin: auto;
     }
 
     .product_sub_content {
         margin: 5px;
-        padding: 8px;
+        padding: 0px;
         width: 100%;
     }
 

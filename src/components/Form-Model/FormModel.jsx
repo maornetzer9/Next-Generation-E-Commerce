@@ -3,10 +3,11 @@ import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { Box, Button, Checkbox, FormControl, FormLabel, TextField, Typography, FormControlLabel } from "@mui/material";
-import './form-model.css'
-import { motion } from "framer-motion";
+import { Box, Button, Checkbox, FormControl, FormLabel, TextField, Typography, FormControlLabel, Alert } from "@mui/material";
+import ErrorIcon from '@mui/icons-material/Error';
 import { headContentAnimation } from "../../utils/motion";
+import { motion } from "framer-motion";
+import './form-model.css'
 
 export default function FormModel({
     formTitle,
@@ -14,6 +15,7 @@ export default function FormModel({
     formValues,
     handleFormChange,
     handleSubmit,
+    error,
     checkboxLabel,
     checkboxName,
     checkboxChecked,
@@ -96,6 +98,16 @@ export default function FormModel({
                         />
                     )}
     
+                    { error ? 
+                        <Alert 
+                            variant="filled"
+                            severity="error"
+                            icon={<ErrorIcon/>} 
+                        >
+                          {error}
+                        </Alert>
+                    : null }
+
                     <Button
                         type="submit"
                         onClick={(e) => handleSubmit(e)}
