@@ -5,9 +5,9 @@ import Remove from "@mui/icons-material/Remove";
 import CheckIcon from "@mui/icons-material/Check";
 import ErrorIcon from "@mui/icons-material/Error";
 import { useSelector } from "react-redux";
-import "../../css/product.css";
-import { fadeAnimation, slideAnimation } from "../../utils/motion";
+import { slideAnimation } from "../../utils/motion";
 import { motion } from "framer-motion";
+import "../../css/product.css";
 
 export default function Product({
     index = 1,
@@ -114,8 +114,14 @@ export default function Product({
                         component={"img"}
                         src={item.thumbnail}
                         alt={item.title}
+                        sx={{height: { xs: '200px', sm: '250px', md: '300px' }}}
                     ></Box>
-                    <Typography variant="h3">Bought: {item.bought}</Typography>
+                    <Typography 
+                        variant="h3"
+                        sx={{fontSize: {xs: '36px', sm: '40px', md: '45px'}}}
+                    >
+                        Bought: {item.bought}
+                    </Typography>
                 </Box>
             </Box>
         </Box>

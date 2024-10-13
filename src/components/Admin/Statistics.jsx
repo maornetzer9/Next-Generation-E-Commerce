@@ -12,7 +12,7 @@ import { useDarkMode } from "../../hooks/darkMode";
 
 export default function Statistics() {
 
-    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/customers`;
+    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/user`;
     
     const dispatch = useDispatch();
 

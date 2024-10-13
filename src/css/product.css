@@ -85,4 +85,8 @@
     .product_amount_form {
         gap: 5px;
     }
+
+    .product_img {
+        height: 200px;
+    }
 }

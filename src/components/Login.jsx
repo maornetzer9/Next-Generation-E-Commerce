@@ -11,7 +11,7 @@ import '../css/login.css';
 
 export default function Login() {
 
-  const LOGIN_URL = `${ORIGIN}/customers/login`
+  const LOGIN_URL = `${ORIGIN}/user/login`
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

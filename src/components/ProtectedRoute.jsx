@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 import { authAction } from '../actions/userActions';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -8,7 +8,7 @@ import Loader from '../UI/Loader';
 import { ORIGIN } from '../App';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-    const AUTH_URL = `${ORIGIN}/customers/auth`;
+    const AUTH_URL = `${ORIGIN}/user/auth`;
     const user = JSON.parse(localStorage.getItem('user'));
 
     // Using optional chaining to safely access the token

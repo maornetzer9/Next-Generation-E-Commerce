@@ -13,7 +13,6 @@ import Cart from "./Cart";
 import "../../css/products.css";
 
 export default function Products() {
-
   useLoadData();
   const { products } = useSelector((state) => state.productsReducer);
   const { cart } = useSelector((state) => state.cartReducer.user);
@@ -21,7 +20,6 @@ export default function Products() {
 
   const { quantities, messages, addToCart, removeFromCart } = useCartOperations();
 
-  // Memoize scrollToTop function
   const scrollToTop = useCallback(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -59,13 +57,13 @@ export default function Products() {
         item.price > 0 && (
           <motion.div key={index} className="products_inner_form" {...headContentAnimation}>
             <Product
-              item={item}
-              index={index}
-              quantity={quantities[index] || 0}
-              addToCart={() => addToCart(item, index)}
-              removeFromCart={() => removeFromCart(item, index)}
-              successMessage={messages[index]?.successMessage || ''}
-              error={messages[index]?.error || ''}
+                item={item}
+                index={index}
+                quantity={quantities[index] || 0}
+                addToCart={() => addToCart(item, index)}
+                removeFromCart={() => removeFromCart(item, index)}
+                successMessage={messages[index]?.successMessage || ''}
+                error={messages[index]?.error || ''}
             />
             <Divider />
           </motion.div>
@@ -75,25 +73,25 @@ export default function Products() {
       {cart.items.length ? (
         <Box component="div">
           <Cart
-            user={user}
-            addToTheCart={addToCart}
-            removeFromCart={removeFromCart}
+                user={user}
+                addToTheCart={addToCart}
+                removeFromCart={removeFromCart}
           />
         </Box>
       ) : null}
 
       <Button
-        color="inherit"
-        variant="text"
-        onClick={scrollToTop}  
-        startIcon={<MdOutlineArrowCircleUp size={50} />}
-        sx={{
-          position: 'fixed',
-          zIndex: 1,
-          top: '94%',
-          right: 0,
-          outline: 'none !important',
-        }}
+            color="inherit"
+            variant="text"
+            onClick={scrollToTop}  
+            startIcon={<MdOutlineArrowCircleUp size={50} />}
+            sx={{
+              position: 'fixed',
+              zIndex: 1,
+              top: '94%',
+              right: 0,
+              outline: 'none !important',
+            }}
       >
       </Button>
     </Box>

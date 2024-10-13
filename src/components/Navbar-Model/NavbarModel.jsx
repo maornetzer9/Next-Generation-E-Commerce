@@ -21,7 +21,7 @@ import { ORIGIN } from '../../App';
 const NavbarModel = (({ menuHeader }) => {
     
     const drawerWidth = 240;
-    const USER_DISCONNECT_URL = `${ORIGIN}/customers/disconnect`;
+    const USER_DISCONNECT_URL = `${ORIGIN}/user/disconnect`;
 
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.userReducer);
@@ -144,11 +144,11 @@ return (
                       sx={{
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',     
-                          width: showInfo ? '145px' : '0px', 
+                          width: showInfo ? '175px' : '0px', 
                           transition: 'width 0.5s ease-out', 
                       }}
                   >
-                      { 'Menu on Left Side' }
+                      { 'Dashboard on Left Side' }
                   </AlertTitle>
               </Alert>
           </motion.div>

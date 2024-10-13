@@ -11,7 +11,7 @@ export default function Account() {
   
   const dispatch = useDispatch();
 
-  const CUSTOMER_UPDATE_URL = `${ORIGIN}/customers/update`;
+  const CUSTOMER_UPDATE_URL = `${ORIGIN}/user/update`;
   
   const [ error, setError ] = useState('');
   const [ edit, setEdit ] = useState(false);

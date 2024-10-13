@@ -5,7 +5,7 @@ import { loadUsersOrders } from "../../actions/orderActions";
 import { ORIGIN } from "../../App";
 
 export default function Customers() {
-    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/customers`;
+    const LOAD_ADMIN_ORDERS_URL = `${ORIGIN}/admin/user`;
 
     const dispatch = useDispatch();
 

@@ -55,7 +55,7 @@ export const useCartOperations = () => {
                         ...prevMessages,
                         [index]: {
                             successMessage: "",
-                            error: "Failed to add product to cart",
+                            error: message
                         },
                     }));
                     setQuantities((prev) => ({
@@ -78,7 +78,7 @@ export const useCartOperations = () => {
                     ...prevMessages,
                     [index]: {
                         successMessage: "",
-                        error: "Failed to add product to cart",
+                        error: messages
                     },
                 }));
             }

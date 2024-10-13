@@ -9,7 +9,7 @@ import '../css/register.css';
 import { ORIGIN } from "../App";
 
 export default function Register() {
-  const REGISTER_URL = `${ORIGIN}/customers/register`;
+  const REGISTER_URL = `${ORIGIN}/user/register`;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

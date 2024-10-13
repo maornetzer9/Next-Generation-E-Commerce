@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
 import { loadOrdersAction } from "../../actions/orderActions";
-import TableModel from "../Table-Model/TableModel";
 import { motion } from "framer-motion";
 import { headTextAnimation } from "../../utils/motion";
 import { ORIGIN } from "../../App";
+import TableModel from "../Table-Model/TableModel";
 
 export default function Orders() {
 
@@ -36,7 +36,7 @@ export default function Orders() {
             >
                 Orders
             </Typography>
-            {/* Customer Table */}
+
             <TableModel
                 label="Product"
                 labelTwo="Quantity"
