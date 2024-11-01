@@ -5,8 +5,8 @@ import { REGISTRATION_FORM } from "../utils/textFieldForms";
 import { registerAction } from "../actions/userActions";
 import { Box } from "@mui/material";
 import FormModel from "./Form-Model/FormModel";
-import '../css/register.css';
 import { ORIGIN } from "../App";
+import '../css/register.css';
 
 export default function Register() {
   const REGISTER_URL = `${ORIGIN}/user/register`;
